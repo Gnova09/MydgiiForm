@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { getForm606 } from '../db/controllers/userdata';
+import { authState, getForm606 } from '../db/controllers/userdata';
 
 
 //Context
@@ -10,7 +10,7 @@ export const AppContext = createContext();
 //Provider
 export const AppContextProvider = ({ children }) => {
     //Estados de mi aplicacion
-    const [user, setUser] = useState("userdata!");
+    const [islogin, setIslogin] = useState(false);
     const [IsOpenSidebar, setIsOpenSidebar] = useState(false);
     const [IsOpenAvatarmenu, setIsOpenAvatarmenu] = useState(false);
     const [form606Data, setform606Data] = useState([]);
@@ -37,19 +37,37 @@ export const AppContextProvider = ({ children }) => {
 
     //ComponentDidMouunt
     useEffect(() => {
-        
+       /*  if(islogin){
+            window.location.href = "/pages/home"
+        }else{
+            window.location.href = "/"
+        } */ 
     }, []);
+
+    //Sesion logeada
+    useEffect(()=>{
+        const userFnc=(user)=>{
+            if(user){
+                setIslogin(true)
+                
+            }else{
+                setIslogin(false)
+            }
+        }
+            authState(userFnc)
+    },[islogin])
 
     //
     const values = useMemo(() => (
         {
             // Funciones que son exportadas para manejo externo.
-            user, setUser,
+            
             IsOpenAvatarmenu,IsOpenSidebar,
             setIsOpenSidebar, setIsOpenAvatarmenu,
             form606Data, setform606Data,
             clientes, setclientes,
-            newform, setnewform
+            newform, setnewform,
+            islogin, setIslogin
         }));   // States que serán visibles en el contexto.
 
     // Interface donde será expuesto como proveedor y envolverá la App.

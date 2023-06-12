@@ -1,10 +1,11 @@
 "use client"
 import React from 'react'
 import useAppContext from '@/app/context/context'
+import { SignOutUser } from '@/app/db/controllers/userdata'
 
 const Navbar = () => {
    
-    const {IsOpenAvatarmenu, setIsOpenAvatarmenu,setIsOpenSidebar, IsOpenSidebar} = useAppContext()
+    const {IsOpenAvatarmenu, setIsOpenAvatarmenu,setIsOpenSidebar, IsOpenSidebar, setIslogin} = useAppContext()
 
     const handleSideBar = () => {
         setIsOpenSidebar(!IsOpenSidebar)
@@ -14,7 +15,21 @@ const Navbar = () => {
         setIsOpenAvatarmenu(!IsOpenAvatarmenu)
         
     }
+    
+    const handleSingOut = () => {
+        const { success, error} =SignOutUser()
 
+        if(success){
+            console.log("logOut")
+            setIslogin(false)
+        }
+
+        if(error){
+            console.log(error)
+            setIslogin(false)
+        }
+        window.location.href = "/"
+    }   
     return (
         <nav class=" fixed top-0 z-50 w-full bg-white border-b border-gray-200 dark:bg-gray-800 dark:border-gray-700">
             <div class="px-3 py-3 lg:px-5 lg:pl-3">
@@ -69,7 +84,9 @@ const Navbar = () => {
                                             <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Earnings</a>
                                         </li>
                                         <li>
-                                            <a href="#" class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</a>
+                                            <button 
+                                            onClick={handleSingOut}
+                                            class="block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 dark:text-gray-300 dark:hover:bg-gray-600 dark:hover:text-white" role="menuitem">Sign out</button>
                                         </li>
                                     </ul>
                                 </div>

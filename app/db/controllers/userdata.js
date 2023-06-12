@@ -1,5 +1,6 @@
-import { db } from "../firebase";
-import { addDoc, collection, doc, getDocs, query, setDoc } from "firebase/firestore"
+import { db, auth } from "../firebase";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { addDoc, collection, doc, getDocs, query, setDoc } from "firebase/firestore";
 
 export function newUser(name, email, pass) {
 
@@ -18,6 +19,66 @@ export function newUser(name, email, pass) {
         });
 
 }
+
+//CREATE USER//
+export async function CreateUser(email, password) {
+
+    return await createUserWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            //console.log(user)
+            return user
+            // ...
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            // ..
+            return errorMessage
+        });
+
+}
+
+//SIGN IN//
+export async function SignIn(email, password) {
+
+    return await signInWithEmailAndPassword(auth, email, password)
+        .then((userCredential) => {
+            // Signed in
+            const user = userCredential.user;
+            // ...
+            return {user}
+        })
+        .catch((error) => {
+            const errorCode = error.code;
+            const errorMessage = error.message;
+            return {error: errorCode + errorMessage}
+        });
+
+
+}
+
+//SIGN OUT//
+export async function SignOutUser() {
+    return await signOut(auth)
+        .then(() => {
+            return {
+                success: true
+            }
+        })
+        .catch((err) => {
+            return {
+                error: err
+            }
+        })
+}
+
+//AUTH STATE//
+export async function authState(userFnc) {
+    onAuthStateChanged(auth, userFnc)
+}
+
 
 export function newClient(rnc, name) {
 
