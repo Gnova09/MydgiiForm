@@ -4,7 +4,7 @@ import * as React from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 import useAppContext from '@/app/context/context';
 
-const columns = [
+/* const columns = [
   { field: 'id', headerName: 'ID', width: 70 },
   { field: 'cliente', headerName: 'Cliente', width: 130 },
   { field: 'date', headerName: 'Fecha creacion', width: 130 },
@@ -15,16 +15,18 @@ const columns = [
     width: 190,
   },
   
-];
+]; */
 
 
-export default  function DataTable() {
-  const {form606Data} =  useAppContext()
+export default  function DataTable({column, row}) {
+ 
+
   return (
     <div style={{ height: 400, width: '100%' }}>
       <DataGrid
-        rows={form606Data}
-        columns={columns}
+        rows={row}
+        columns={column}
+        
         initialState={{
           pagination: {
             paginationModel: { page: 0, pageSize: 5 },

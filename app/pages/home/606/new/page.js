@@ -1,97 +1,148 @@
 "use client"
-import React, { useState } from 'react'
-import Btn from '../components/btn'
+import React, { useState, useEffect } from 'react'
+import DataTable from '../components/table'
+import useAppContext from '@/app/context/context'
+import { newForm606 } from '@/app/db/controllers/userdata'
+
+
+const column = [
+    { field: 'id', headerName: 'N   CF', width: 130 },
+    { field: 'ID', headerName: 'Tipo ID', width: 70 },
+    { field: 'bienes', headerName: 'Bienes', width: 70 },
+    { field: 'Date', headerName: 'Fecha Comprobante', width: 130 },
+    { field: 'Monto', headerName: 'Monto', width: 130 },
+    { field: 'propina', headerName: 'Propina', width: 130 },
+    { field: 'Fpago', headerName: 'Forma de pago', width: 70 },
+    { field: 'Itbis', headerName: 'Itbis(18%)', width: 130 },
+    { field: 'Itbis2', headerName: 'Itbis(2%)', width: 130 },
+    { field: 'Itbis10', headerName: 'Itbis(10%)', width: 130 },
+
+]
+
+const today = new Date();
+const year = today.getFullYear().toString();
+const month = (today.getMonth() + 1).toString().padStart(2, '0');
+
+const dateCreated = `${year}/${month}`;
 
 export default function pages() {
 
+    const { clientes } = useAppContext()
     const [cliente, setcliente] = useState("")
-    const [ID, setID] = useState("")
-    const [bienes, setbienes] = useState("")
-    const [NCF, setNCF] = useState("")
-    const [Date, setDate] = useState("")
-    const [Monto, setMonto] = useState("")
-    const [propina, setpropina] = useState("")
-    const [Fpago, setFpago] = useState("")
+    const [row, setrow] = useState([])
+    const [form606, setform606] = useState({
+        cliente,
+        dateCreated,
+        totalRow: row.length,
+        row
+    });
+    const [ID, setID] = useState()
+    const [bienes, setbienes] = useState()
+    const [NCF, setNCF] = useState()
+    const [Date, setDate] = useState()
+    const [Monto, setMonto] = useState()
+    const [propina, setpropina] = useState()
+    const [Fpago, setFpago] = useState()
     const [Itbis, setItbis] = useState(false)
     const [Itbis2, setItbis2] = useState(false)
     const [Itbis10, setItbis10] = useState(false)
+    
+
+    useEffect(() => {
+        setform606({
+            ...form606,
+            cliente,
+            totalRow: row.length,
+            row
+        })
+    }, [row])
+
+    const handleReset = () => {
+        setID("");
+        setbienes("")
+        setNCF('');
+        setDate("")
+        setMonto("")
+        setpropina('');
+        setFpago('');
+        setItbis2(false);
+        setItbis10(false);
+        setItbis(false);
+    };
 
     const handleSubmit = (e) => {
         e.preventDefault()
-        console.log([
+        setrow([
+            ...row,
             {
-                idForm: 1,
-                cliente,
-                Datecreated,
-                row: [
-                    {
-                       
-                        ID,
-                        bienes,
-                        NCF,
-                        Date,
-                        Monto,
-                        propina,
-                        Fpago,
-                        Itbis,
-                        Itbis2,
-                        Itbis10
-                    },
-                    {
-                        
-                        ID,
-                        bienes,
-                        NCF,
-                        Date,
-                        Monto,
-                        propina,
-                        Fpago,
-                        Itbis,
-                        Itbis2,
-                        Itbis10
-                    },
-                ]
+                id: NCF,
+                ID,
+                bienes,
+                NCF,
+                Date,
+                Monto,
+                propina,
+                Fpago,
+                Itbis: Itbis ? Monto * 0.18 : 0,
+                Itbis2: Itbis2 ? Monto * 0.02 : 0,
+                Itbis10: Itbis10 ? Monto * 0.10 : 0
             }
-        ]
-        )
+        ])
+        handleReset()
+    }
+
+    const handleFinish = async (e) => {
+
+       await  newForm606(form606);
+        
+        window.location.href = '/pages/home/606';
     }
 
     return (
         <section class="bg-white dark:bg-gray-900">
             <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
-                <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Add a new product</h2>
-                <form action="#" onSubmit={handleSubmit}>
+                <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Nuevo Formulario</h2>
+                <form onSubmit={handleSubmit}>
                     <div class="grid gap-4 sm:grid-cols-2 sm:gap-6">
 
                         {/* RNC/Cedula */}
                         <div class="sm:col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">RNC/Cedula</label>
-                            <select id="category" required
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">RNC/Cedula *</label>
+                            <select id="category"
                                 onChange={(event) => setcliente(event.target.value)}
+                                disabled={cliente === "" ? false : true}
+                                required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option selected="">Seleccionar Cliente</option>
-                                <option value="1">cliente 1</option>
-                                <option value="2">cliente 1</option>
-                                <option value="3">cliente 1</option>
-                                <option value="4">cliente 1</option>
+                                <option value="">Seleccionar Cliente</option>
+                                {
+                                    clientes.map(({ name, rnc }) => {
+
+                                        return <option value={rnc}>{`${name} - ${rnc}`}</option>
+                                    })
+                                }
+
                             </select>
                         </div>
 
                         {/* Tipo de ID */}
                         <div class="w-full">
-                            <label for="TID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo ID</label>
+                            <label for="TID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo ID *</label>
                             <input type="number"
                                 onChange={(event) => setID(event.target.value)}
-                                name="TID" id="TID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="ID" required="" />
+                                value={ID}
+                                required
+                                name="TID" id="TID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="ID" />
                         </div>
 
                         {/*Bienes y servicios */}
                         <div>
-                            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bienes y servicios comprados</label>
+                            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Bienes y servicios comprados *</label>
                             <select
+                                required
                                 onChange={(event) => setbienes(event.target.value)}
+                                value={bienes}
                                 id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option selected="">Seleccionar uno </option>
+                                <option value="">Seleccionar uno </option>
                                 <option value="01">01-Gastos de personal</option>
                                 <option value="02">02-Gastos por trabajos, suministros y servicios</option>
                                 <option value="03">03-Arrendamientos</option>
@@ -108,42 +159,52 @@ export default function pages() {
 
                         {/*NCF */}
                         <div class="w-full">
-                            <label for="NCF" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NCF</label>
+                            <label for="NCF" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">NCF *</label>
                             <input type="text"
+                                required
+                                value={NCF}
                                 onChange={(event) => setNCF(event.target.value)}
-                                name="NCF" id="NCF" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="000000000" required="" />
+                                name="NCF" id="NCF" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="000000000" />
                         </div>
 
                         {/*Fechas */}
                         <div class="w-full">
-                            <label for="Fcomprobante" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de comprobante</label>
+                            <label for="Fcomprobante" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Fecha de comprobante *</label>
                             <input type="date"
+                                required
+                                value={Date}
                                 onChange={(event) => setDate(event.target.value)}
-                                name="Fcomprobante" id="Fcomprobante" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="000000000" required="" />
+                                name="Fcomprobante" id="Fcomprobante" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="000000000" />
                         </div>
 
 
                         {/*Montos */}
                         <div>
-                            <label for="Mservicios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Monto en Servicios ($RD)</label>
+                            <label for="Mservicios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Monto en Servicios ($RD) *</label>
                             <input
+                                required
+                                value={Monto}
                                 onChange={(event) => setMonto(event.target.value)}
-                                type="number" name="Mservicios" id="Mservicios" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="RD$ 10,000.00" required="" />
+                                type="number" name="Mservicios" id="Mservicios" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="RD$ 10,000.00" />
                         </div>
                         <div>
                             <label for="Propina" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Monto en Propina ($RD)</label>
                             <input
+
+                                value={propina}
                                 onChange={(event) => setpropina(event.target.value)}
-                                type="number" name="Propina" id="Propina" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="RD$ 10,000.00" required="" />
+                                type="number" name="Propina" id="Propina" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="RD$ 10,000.00" />
                         </div>
 
                         {/*Forma de pago */}
                         <div>
-                            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Formas de pago</label>
+                            <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Formas de pago *</label>
                             <select
+                                required
+                                value={Fpago}
                                 onChange={(event) => setFpago(event.target.value)}
                                 id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option selected="">Seleccionar uno </option>
+                                <option value="">Seleccionar uno </option>
                                 <option value="01">01-Efectivo</option>
                                 <option value="02">02-Cheques/Transferencias</option>
                                 <option value="03">03-Tarjeta de Credito/Debito</option>
@@ -159,18 +220,23 @@ export default function pages() {
                             <label for="Mservicios" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">ITBIS</label>
                             <div class="flex items-center ">
                                 <input
+
                                     onChange={(event) => setItbis2(event.target.value)}
+                                    checked={Itbis2 ? true : false}
                                     id="default-checkbox" type="checkbox" value={true} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">2%</label>
                             </div>
                             <div class="flex items-center">
                                 <input
+                                    checked={Itbis10 ? true : false}
                                     onChange={(event) => setItbis10(event.target.value)}
                                     id="checked-checkbox" type="checkbox" value={true} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <label for="checked-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">10%</label>
                             </div>
                             <div class="flex items-center">
                                 <input
+
+                                    checked={Itbis ? true : false}
                                     onChange={(event) => setItbis(event.target.value)}
                                     id="checked-checkbox" type="checkbox" value={true} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <label for="checked-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">18%</label>
@@ -178,9 +244,19 @@ export default function pages() {
                         </div>
                     </div>
                     <button type="submit" class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
-                        Add product
+                        Agregar
                     </button>
                 </form>
+            </div>
+            <div className='w-full px-5 mt-2'>
+
+                <DataTable column={column} row={row} />
+
+                <button
+                    onClick={handleFinish}
+                    class="inline-flex items-center px-5 py-2.5 mt-4 sm:mt-6 text-sm font-medium text-center text-white bg-primary-700 rounded-lg focus:ring-4 focus:ring-primary-200 dark:focus:ring-primary-900 hover:bg-primary-800">
+                    Finalizar
+                </button>
             </div>
         </section>
     )

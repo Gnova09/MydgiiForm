@@ -1,60 +1,65 @@
-import { db, app } from "../firebase";
-import { ref, set } from "firebase/database"
+import { db } from "../firebase";
+import { addDoc, collection, doc, getDocs, query, setDoc } from "firebase/firestore"
 
 export function newUser(name, email, pass) {
 
-    const reference = ref(db, "users/" + name);
+    const reference = doc(db, "users", email);
 
-    set(reference, {
+    setDoc(reference, {
         username: name,
         email,
         pass
     })
+        .then((docRef) => {
+            console.log('Nuevo usuario creado con ID:', docRef.id);
+        })
+        .catch((error) => {
+            console.error('Error al crear el usuario:', error);
+        });
 
 }
 
-export function newForm606() {
-    
-    const reference = ref(db, "forms606")
-    // Crear un nuevo formulario en el documento referenciado
-    const nuevoFormularioData = {
-        idForm: 1,
-        cliente: 'Nombre del cliente',
-        Datecreated: new Date(),
-        row: [
-            {
-                ID: 1,
-                bienes: 'Descripción de bienes 1',
-                NCF: 'NCF1',
-                Date: new Date(),
-                Monto: 100,
-                propina: 10,
-                Fpago: 'Forma de pago 1',
-                Itbis: 18,
-                Itbis2: 0,
-                Itbis10: 0
-            },
-            {
-                ID: 2,
-                bienes: 'Descripción de bienes 2',
-                NCF: 'NCF2',
-                Date: new Date(),
-                Monto: 200,
-                propina: 20,
-                Fpago: 'Forma de pago 2',
-                Itbis: 0,
-                Itbis2: 5,
-                Itbis10: 10
-            }
-        ]
-    };
-    // Establecer los datos del nuevo formulario en el documento referenciado
-    nuevoFormularioRef.set(nuevoFormularioData)
-        .then(() => {
-            console.log('Formulario creado con ID:', nuevoFormularioRef.id);
+export function newClient(rnc, name) {
+
+    const reference = doc(db, "client", rnc);
+
+    setDoc(reference, {
+        rnc,
+        name
+    })
+        .then((docRef) => {
+            console.log('Nuevo cliente creado con ID:', docRef.id);
+        })
+        .catch((error) => {
+            console.error('Error al crear el cliente:', error);
+        });
+
+}
+
+export function newForm606(form) {
+
+    const collectionRef = collection(db, 'forms606');
+
+    addDoc(collectionRef, form)
+        .then((docRef) => {
+            console.log('Nuevo formulario creado con ID:', docRef.id);
         })
         .catch((error) => {
             console.error('Error al crear el formulario:', error);
         });
+}
+
+export async function getForm606() {
+
+    const q = query(collection(db, "forms606"));
+
+    const querySnapshot = await getDocs(q);
+    const data = []
+    let n = 1
+    querySnapshot.forEach((doc) => {
+        // doc.data() is never undefined for query doc snapshots
+        data.push({ ...doc.data(), id: n++ })
+    });
+    return (data)
 
 }

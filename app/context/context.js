@@ -1,6 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
+import { getForm606 } from '../db/controllers/userdata';
 
 
 //Context
@@ -12,23 +13,31 @@ export const AppContextProvider = ({ children }) => {
     const [user, setUser] = useState("userdata!");
     const [IsOpenSidebar, setIsOpenSidebar] = useState(false);
     const [IsOpenAvatarmenu, setIsOpenAvatarmenu] = useState(false);
-    const [form606Data, setform606Data] = useState([
-        { id: 1, date: '2023/03/02', cliente: 'Jon', registro: 35 },
-        { id: 2, date: '2023/03/02', cliente: 'Cersei', registro: 42 },
-        { id: 3, date: '2023/03/02', cliente: 'Jaime', registro: 45 },
-        { id: 4, date: '2023/03/02', cliente: 'Arya', registro: 16 },
-        { id: 5, date: '2023/03/02', cliente: 'Daenerys', registro: null },
-        { id: 6, date: '2023/03/02', cliente: "Daenerys", registro: 150 },
-        { id: 7, date: '2023/03/02', cliente: 'Ferrara', registro: 44 },
-        { id: 8, date: '2023/03/02', cliente: 'Rossini', registro: 36 },
-        { id: 9, date: '2023/03/02', cliente: 'Harvey', registro: 65 },
-      ]);
-    const [clientes, setclientes] = useState([]);
+    const [form606Data, setform606Data] = useState([]);
+    const [clientes, setclientes] = useState([
+        {
+            name:"Georges Bueno",
+            rnc:"40215081338"
+        },
+        {
+            name:"Arancha Nicole",
+            rnc:"40583496338"
+        },
+        {
+            name:"Genesis cruz",
+            rnc:"40338862105"
+        },
+        {
+            name:"Juan perez",
+            rnc:"40854237921"
+        },
+
+    ]);
     const [newform, setnewform] = useState([]);
 
     //ComponentDidMouunt
     useEffect(() => {
-
+        
     }, []);
 
     //
