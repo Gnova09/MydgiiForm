@@ -23,7 +23,7 @@ const today = new Date();
 const year = today.getFullYear().toString();
 const month = (today.getMonth() + 1).toString().padStart(2, '0');
 
-const dateCreated = `${year}/${month}`;
+const dateCreated = `${year}${month}`;
 
 export default function pages() {
 
@@ -37,6 +37,7 @@ export default function pages() {
         row
     });
     const [ID, setID] = useState()
+    const [RNC, setRNC] = useState()
     const [bienes, setbienes] = useState()
     const [NCF, setNCF] = useState()
     const [Date, setDate] = useState()
@@ -77,6 +78,7 @@ export default function pages() {
             {
                 id: NCF,
                 ID,
+                RNC,
                 bienes,
                 NCF,
                 Date,
@@ -122,6 +124,16 @@ export default function pages() {
                                 }
 
                             </select>
+                        </div>
+
+                        {/* RNC O CEDULA */}
+                        <div class="w-full">
+                            <label for="TID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">RNC/Cedula *</label>
+                            <input type="number"
+                                onChange={(event) => setRNC(event.target.value)}
+                                value={RNC}
+                                required
+                                name="TID" id="TID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="ID" />
                         </div>
 
                         {/* Tipo de ID */}
