@@ -12,8 +12,7 @@ export const Loginform = () => {
     useEffect(()=>{
         islogin === true ? window.location.href = "/pages/home" : null
     })
-
-  
+ 
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault()
@@ -28,7 +27,7 @@ export const Loginform = () => {
             console.log(error)
         }
         if (user) {
-            setIslogin(true)
+           await setIslogin(true);
             window.location.href = "/pages/home"
         }
 

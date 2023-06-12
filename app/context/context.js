@@ -11,25 +11,25 @@ export const AppContext = createContext();
 export const AppContextProvider = ({ children }) => {
     //Estados de mi aplicacion
     const [islogin, setIslogin] = useState(false);
-    const [IsOpenSidebar, setIsOpenSidebar] = useState(false);
+    const [IsOpenSidebar, setIsOpenSidebar] = useState();
     const [IsOpenAvatarmenu, setIsOpenAvatarmenu] = useState(false);
     const [form606Data, setform606Data] = useState([]);
     const [clientes, setclientes] = useState([
         {
-            name:"Georges Bueno",
-            rnc:"40215081338"
+            name: "Georges Bueno",
+            rnc: "40215081338"
         },
         {
-            name:"Arancha Nicole",
-            rnc:"40583496338"
+            name: "Arancha Nicole",
+            rnc: "40583496338"
         },
         {
-            name:"Genesis cruz",
-            rnc:"40338862105"
+            name: "Genesis cruz",
+            rnc: "40338862105"
         },
         {
-            name:"Juan perez",
-            rnc:"40854237921"
+            name: "Juan perez",
+            rnc: "40854237921"
         },
 
     ]);
@@ -37,37 +37,45 @@ export const AppContextProvider = ({ children }) => {
 
     //ComponentDidMouunt
     useEffect(() => {
-       /*  if(islogin){
-            window.location.href = "/pages/home"
-        }else{
-            window.location.href = "/"
-        } */ 
+
     }, []);
 
+    const verifyLogin = () => {
+
+
+        if (islogin) {
+            window.location.href = "/pages/home"
+        } else {
+            window.location.href = "/"
+        }
+
+    }
+
     //Sesion logeada
-    useEffect(()=>{
-        const userFnc=(user)=>{
-            if(user){
+    useEffect(() => {
+        const userFnc = (user) => {
+            if (user) {
                 setIslogin(true)
-                
-            }else{
+
+            } else {
                 setIslogin(false)
             }
         }
-            authState(userFnc)
-    },[islogin])
+        authState(userFnc)
+    }, [islogin])
 
     //
     const values = useMemo(() => (
         {
             // Funciones que son exportadas para manejo externo.
-            
-            IsOpenAvatarmenu,IsOpenSidebar,
+
+            IsOpenAvatarmenu, IsOpenSidebar,
             setIsOpenSidebar, setIsOpenAvatarmenu,
             form606Data, setform606Data,
             clientes, setclientes,
             newform, setnewform,
-            islogin, setIslogin
+            islogin, setIslogin,
+            verifyLogin
         }));   // States que serán visibles en el contexto.
 
     // Interface donde será expuesto como proveedor y envolverá la App.

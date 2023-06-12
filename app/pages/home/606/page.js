@@ -3,23 +3,7 @@ import React from 'react'
 import { getForm606 } from '@/app/db/controllers/userdata'
 import Ptable from './components/ptable'
 
-const column = [
 
-    { field: 'cliente', headerName: 'Cliente', width: 170 },
-    { field: 'dateCreated', headerName: 'Fecha creacion', width: 130 },
-    { field: 'totalRow', headerName: 'Cantidad de registros', type: 'number', width: 170 },
-    {
-        field: 'actions',
-        headerName: 'Actions',
-        width: 150,
-        renderCell: (params) => (
-            <Button variant="contained" color="primary" onClick={() => console.log("clic")}>
-                Download
-            </Button>
-        ),
-    },
-
-]
 
 export default async function pages() {
 
