@@ -7,7 +7,7 @@ import { useEffect } from 'react'
 const Navbar = () => {
    
     const {IsOpenAvatarmenu, setIsOpenAvatarmenu,setIsOpenSidebar, IsOpenSidebar, setIslogin, islogin, user} = useAppContext()
-   console.log(user)
+ 
     //Verrify user login//
     useEffect(() => {
         const userFnc = (user) => {

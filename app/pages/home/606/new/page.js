@@ -1,6 +1,6 @@
 "use client"
 import React, { useState, useEffect } from 'react'
-import DataTable from '../components/table'
+import DataTable from '../../../../components/table'
 import useAppContext from '@/app/context/context'
 import { newForm606 } from '@/app/db/controllers/userdata'
 
@@ -26,7 +26,7 @@ const dateCreated = `${year}${month}`;
 
 export default function pages() {
 
-    const { proveedor,user } = useAppContext()
+    const { proveedor, user } = useAppContext()
 
     const [provee, setprovee] = useState("")
     const [row, setrow] = useState([])
@@ -48,12 +48,12 @@ export default function pages() {
     const [Itbis2, setItbis2] = useState(false)
     const [Itbis10, setItbis10] = useState(false)
 
-    console.log(user)
+
 
     useEffect(() => {
         setform606({
             ...form606,
-            provee,
+            user: user.rnc,
             totalRow: row.length,
             row
         })
@@ -79,8 +79,8 @@ export default function pages() {
             ...row,
             {
                 id: NCF,
-                ID:provee.tipoID,
-                RNC,
+                ID: provee.tipoID,
+                RNC: provee.rnc,
                 bienes,
                 NCF,
                 Date,
@@ -95,17 +95,15 @@ export default function pages() {
         handleReset()
     }
 
-    const handleSelectProveedor=(rnc)=>{
+    const handleSelectProveedor = (rnc) => {
         setprovee(proveedor.find(prove => prove.rnc === rnc))
-
     }
 
     const handleFinish = async (e) => {
+       
+        newForm606(form606);
 
-       await  newForm606(form606);
-        
         window.location.href = '/pages/home/606'; 
-      
     }
 
     return (
@@ -125,7 +123,7 @@ export default function pages() {
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Seleccionar Proveedor</option>
                                 {
-                                    proveedor.map(({rnc, name}) => {
+                                    proveedor.map(({ rnc, name }) => {
 
                                         return <option value={rnc}>{`${name} - ${rnc}`}</option>
                                     })

@@ -1,15 +1,14 @@
 "use client"
 import React from 'react'
-import DataTable from './table'
+import DataTable from '../../../../components/table'
 
 const handleRowButton = async (row) => {
 
-    let contenido = `606|${row.cliente}|${row.dateCreated}|${row.totalRow}`;// Contenido del documento a descargar
+    let contenido = `606|${row.user}|${row.dateCreated}|${row.totalRow}`;// Contenido del documento a descargar
 
     row.row.forEach(item => {
         contenido += `\n${item.RNC}|${item.ID}|${item.bienes}|${item.NCF}||${item.Date.replace(/-/g, "")}||${item.Monto}||${item.Monto}|${item.Itbis}||||${item.Itbis + item.Itbis2 + item.Itbis10}|||||||${item.propina}|${item.Fpago}`
     })
-
 
     const nombreArchivo = "documento.txt"; // Nombre del archivo a descargar
 
@@ -28,7 +27,6 @@ const handleRowButton = async (row) => {
 const column = [
 
     { field: 'id', headerName: '#', width: 170 },
-    { field: 'provee', headerName: 'Proveedor', width: 170 },
     { field: 'dateCreated', headerName: 'Fecha creacion', width: 130 },
     { field: 'totalRow', headerName: 'Cantidad de registros', type: 'number', width: 170 },
     {

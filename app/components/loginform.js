@@ -27,7 +27,7 @@ export const Loginform = () => {
             console.log(error)
         }
         if (user) {
-            console.log(user)
+            
             await setuser(user);
             //await setIslogin(true);
             //window.location.href = "/pages/home"
