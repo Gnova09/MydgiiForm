@@ -9,8 +9,9 @@ const column = [
 
     { field: 'id', headerName: '#', width: 70 },
     { field: 'rnc', headerName: 'RNC/Cedula', width: 130 },
+    { field: 'tipoID', headerName: 'Tipo de ID', width: 130 },
     { field: 'name', headerName: 'Nombre', width: 170 },
-    { field: 'desc', headerName: 'Descripcion', type: 'number', width: 170 },
+    { field: 'desc', headerName: 'Descripcion', type: 'number', width: 270 },
 ]
 
 export default function Home() {
@@ -20,7 +21,6 @@ export default function Home() {
     let n = 1
     useEffect(() => {
         if (user.proveedores) {
-
             setRow(
                 user.proveedores?.map((item) => {
                     return (
@@ -34,7 +34,7 @@ export default function Home() {
         }
     }, [user])
 
-    console.log(user.proveedores)
+   
     return (
         <section class="flex bg-white min-h-screen flex-col items-center justify-center">
             <h1 className=' font-extrabold text-3xl m-10'>Provedores</h1>

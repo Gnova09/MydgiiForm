@@ -2,7 +2,7 @@ import { db, auth } from "../firebase";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 
 
-export async function newProveedor({uid, name, rnc, desc}) {
+export async function newProveedor({uid, name, rnc, tipoID, desc}) {
 
     try {
         const userDocRef = doc(db, 'users', uid);
@@ -10,7 +10,7 @@ export async function newProveedor({uid, name, rnc, desc}) {
     
         if (userDocSnapshot.exists()) {
           const userData = userDocSnapshot.data();
-          const newProveedor = { name, rnc, desc };
+          const newProveedor = { name, rnc, tipoID, desc };
     
           // Agregar el nuevo proveedor al arreglo de proveedores del usuario
           if (userData.proveedores) {

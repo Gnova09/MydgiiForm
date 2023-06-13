@@ -15,27 +15,6 @@ export const AppContextProvider = ({ children }) => {
     const [IsOpenAvatarmenu, setIsOpenAvatarmenu] = useState(false);
     const [form606Data, setform606Data] = useState([]);
     const [proveedor, setproveedor] = useState([
-        {
-            name: "Georges Bueno",
-            rnc: "40215081338",
-            tipoID: 1
-        },
-        {
-            name: "Arancha Nicole",
-            rnc: "40583496338",
-            tipoID: 2
-        },
-        {
-            name: "Genesis cruz",
-            rnc: "40338862105",
-            tipoID: 1
-        },
-        {
-            name: "Juan perez",
-            rnc: "40854237921",
-            tipoID: 2
-        },
-
     ]);
     const [newform, setnewform] = useState([]);
     const [user, setuser] = useState([]);
@@ -62,6 +41,7 @@ export const AppContextProvider = ({ children }) => {
             if (user) {
                const usersign = await getUserByUid(user.uid)
                 setuser({...user, ...usersign});
+                setproveedor(usersign.proveedor)
                 setIslogin(true)
 
             } else {

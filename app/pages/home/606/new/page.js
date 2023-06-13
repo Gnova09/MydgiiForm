@@ -6,7 +6,7 @@ import { newForm606 } from '@/app/db/controllers/userdata'
 
 
 const column = [
-    { field: 'id', headerName: 'N   CF', width: 130 },
+    { field: 'id', headerName: 'NCF', width: 130 },
     { field: 'ID', headerName: 'Tipo ID', width: 70 },
     { field: 'bienes', headerName: 'Bienes', width: 70 },
     { field: 'Date', headerName: 'Fecha Comprobante', width: 130 },
@@ -25,19 +25,20 @@ const month = (today.getMonth() + 1).toString().padStart(2, '0');
 const dateCreated = `${year}${month}`;
 
 export default function pages() {
+    //STATE APP//
+    const { user } = useAppContext()
 
-    const { proveedor, user } = useAppContext()
-
-    const [provee, setprovee] = useState("")
-    const [row, setrow] = useState([])
+    
+    
+    //FORM STATES//
+    const [row, setrow] = useState([])    
+    const [provee, setprovee] = useState("") //usuario
     const [form606, setform606] = useState({
         provee,
         dateCreated,
         totalRow: row.length,
         row
     });
-    const [ID, setID] = useState()
-    const [RNC, setRNC] = useState()
     const [bienes, setbienes] = useState()
     const [NCF, setNCF] = useState()
     const [Date, setDate] = useState()
@@ -47,8 +48,7 @@ export default function pages() {
     const [Itbis, setItbis] = useState(false)
     const [Itbis2, setItbis2] = useState(false)
     const [Itbis10, setItbis10] = useState(false)
-
-
+    const [proveedor, setProveedor] = useState([])
 
     useEffect(() => {
         setform606({
@@ -59,9 +59,12 @@ export default function pages() {
         })
     }, [row])
 
+    useEffect(()=>{
+        setProveedor(user.proveedores);
+    },[user])
+
     const handleReset = () => {
-        setID("");
-        setRNC("");
+       setprovee("")
         setbienes("")
         setNCF('');
         setDate("")
@@ -92,6 +95,7 @@ export default function pages() {
                 Itbis10: Itbis10 ? Monto * 0.10 : 0
             }
         ])
+        
         handleReset()
     }
 
@@ -103,7 +107,7 @@ export default function pages() {
        
         newForm606(form606);
 
-        window.location.href = '/pages/home/606'; 
+        window.location.href = '/pages/home/606';
     }
 
     return (
@@ -118,15 +122,16 @@ export default function pages() {
                             <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Proveedor *</label>
                             <select id="category"
                                 onChange={(event) => handleSelectProveedor(event.target.value)}
-                                disabled={provee === "" ? false : true}
                                 required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Seleccionar Proveedor</option>
                                 {
+                                    proveedor? 
                                     proveedor.map(({ rnc, name }) => {
 
                                         return <option value={rnc}>{`${name} - ${rnc}`}</option>
-                                    })
+                                    }):
+                                    <option value="">Cargando proveedores...</option>
                                 }
 
                             </select>
