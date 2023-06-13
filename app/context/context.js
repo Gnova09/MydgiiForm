@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { authState, getForm606 } from '../db/controllers/userdata';
+import { authState, getForm606, getUserByUid } from '../db/controllers/userdata';
 
 
 //Context
@@ -14,26 +14,31 @@ export const AppContextProvider = ({ children }) => {
     const [IsOpenSidebar, setIsOpenSidebar] = useState();
     const [IsOpenAvatarmenu, setIsOpenAvatarmenu] = useState(false);
     const [form606Data, setform606Data] = useState([]);
-    const [clientes, setclientes] = useState([
+    const [proveedor, setproveedor] = useState([
         {
             name: "Georges Bueno",
-            rnc: "40215081338"
+            rnc: "40215081338",
+            tipoID: 1
         },
         {
             name: "Arancha Nicole",
-            rnc: "40583496338"
+            rnc: "40583496338",
+            tipoID: 2
         },
         {
             name: "Genesis cruz",
-            rnc: "40338862105"
+            rnc: "40338862105",
+            tipoID: 1
         },
         {
             name: "Juan perez",
-            rnc: "40854237921"
+            rnc: "40854237921",
+            tipoID: 2
         },
 
     ]);
     const [newform, setnewform] = useState([]);
+    const [user, setuser] = useState([]);
 
     //ComponentDidMouunt
     useEffect(() => {
@@ -53,8 +58,10 @@ export const AppContextProvider = ({ children }) => {
 
     //Sesion logeada
     useEffect(() => {
-        const userFnc = (user) => {
+        const userFnc = async (user) => {
             if (user) {
+               const usersign = await getUserByUid(user.uid)
+                setuser({...user, ...usersign});
                 setIslogin(true)
 
             } else {
@@ -72,9 +79,10 @@ export const AppContextProvider = ({ children }) => {
             IsOpenAvatarmenu, IsOpenSidebar,
             setIsOpenSidebar, setIsOpenAvatarmenu,
             form606Data, setform606Data,
-            clientes, setclientes,
+            proveedor, setproveedor,
             newform, setnewform,
             islogin, setIslogin,
+            user, setuser,
             verifyLogin
         }));   // States que serán visibles en el contexto.
 

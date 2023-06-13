@@ -1,13 +1,13 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import { SignIn } from '../db/controllers/userdata'
+import { SignIn, CreateUser, newClient } from '../db/controllers/userdata'
 import useAppContext from '../context/context'
 
 export const Loginform = () => {
 
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
-    const { islogin, setIslogin } = useAppContext()
+    const { islogin, setIslogin,setuser } = useAppContext()
 
     useEffect(()=>{
         islogin === true ? window.location.href = "/pages/home" : null
@@ -22,15 +22,16 @@ export const Loginform = () => {
         pasa a home
         */
         const { user, error } = await SignIn(email, pass)
-       
+       // await newClient("kljs","georges")
         if (error) {
             console.log(error)
         }
         if (user) {
-           await setIslogin(true);
-            window.location.href = "/pages/home"
+            console.log(user)
+            await setuser(user);
+            //await setIslogin(true);
+            //window.location.href = "/pages/home"
         }
-
     }
 
     return (

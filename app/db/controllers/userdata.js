@@ -1,6 +1,25 @@
 import { db, auth } from "../firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection, doc, getDocs, query, setDoc } from "firebase/firestore";
+import { addDoc, collection, doc, getDoc, getDocs, query, setDoc } from "firebase/firestore";
+
+
+export async function getUserByUid(uid) {
+    try {
+        const userDocRef = doc(db, "users", uid);
+        const docSnap = await getDoc(userDocRef);
+
+        if (docSnap.exists()) {
+            const user = docSnap.data();
+            return user;
+        } else {
+            console.log('El documento no existe.');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al obtener el documento:', error);
+        return null;
+    }
+}
 
 export function newUser(name, email, pass) {
 
@@ -21,40 +40,41 @@ export function newUser(name, email, pass) {
 }
 
 //CREATE USER//
-export async function CreateUser(email, password) {
+export async function CreateUser(email, password, rnc = "") {
 
-    return await createUserWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            //console.log(user)
-            return user
-            // ...
+    try {
+        const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+        const user = userCredential.user;
+        const reference = doc(db, "users", user.uid);
+
+        await setDoc(reference, {
+            email,
+            rnc,
         })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            // ..
-            return errorMessage
-        });
+
+        console.log('Nuevo usuario creado con ID:', user.uid);
+        return { user: { ...user, rnc } };
+    } catch (error) {
+        console.error('Error al crear el usuario:', error);
+        return { error: null };
+    }
 
 }
 
 //SIGN IN//
 export async function SignIn(email, password) {
 
-    return await signInWithEmailAndPassword(auth, email, password)
-        .then((userCredential) => {
-            // Signed in
-            const user = userCredential.user;
-            // ...
-            return {user}
-        })
-        .catch((error) => {
-            const errorCode = error.code;
-            const errorMessage = error.message;
-            return {error: errorCode + errorMessage}
-        });
+    try {
+        const userSign = await signInWithEmailAndPassword(auth, email, password)
+        // Signed in
+        return userSign.user
+
+    } catch (error) {
+        const errorCode = error.code;
+        const errorMessage = error.message;
+        return { error: errorCode + errorMessage }
+    }
+
 
 
 }

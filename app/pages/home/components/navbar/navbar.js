@@ -1,13 +1,13 @@
 "use client"
 import React from 'react'
 import useAppContext from '@/app/context/context'
-import { SignOutUser, authState } from '@/app/db/controllers/userdata'
+import { SignOutUser, authState, getUserByUid } from '@/app/db/controllers/userdata'
 import { useEffect } from 'react'
 
 const Navbar = () => {
    
-    const {IsOpenAvatarmenu, setIsOpenAvatarmenu,setIsOpenSidebar, IsOpenSidebar, setIslogin, islogin} = useAppContext()
-    
+    const {IsOpenAvatarmenu, setIsOpenAvatarmenu,setIsOpenSidebar, IsOpenSidebar, setIslogin, islogin, user} = useAppContext()
+   console.log(user)
     //Verrify user login//
     useEffect(() => {
         const userFnc = (user) => {
@@ -31,7 +31,7 @@ const Navbar = () => {
         
     }
     
-    const handleSingOut = () => {
+    const handleSingOut = async () => {
         const { success, error} =SignOutUser()
 
         if(success){
@@ -43,7 +43,9 @@ const Navbar = () => {
             console.log(error)
             setIslogin(false)
         }
-        window.location.href = "/"
+        window.location.href = "/" 
+
+        
     }   
 
     return (
@@ -83,10 +85,10 @@ const Navbar = () => {
                                 <div class={`z-50 ${IsOpenAvatarmenu ? "block absolute right-[10px] " : "hidden"} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user`}  >
                                     <div class="px-4 py-3" role="none">
                                         <p class="text-sm text-gray-900 dark:text-white" role="none">
-                                            Neil Sims
+                                            {user?.name}
                                         </p>
                                         <p class="text-sm font-medium text-gray-900 truncate dark:text-gray-300" role="none">
-                                            neil.sims@flowbite.com
+                                            {user?.email}
                                         </p>
                                     </div>
                                     <ul class="py-1" role="none">

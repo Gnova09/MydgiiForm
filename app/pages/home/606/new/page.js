@@ -22,16 +22,16 @@ const column = [
 const today = new Date();
 const year = today.getFullYear().toString();
 const month = (today.getMonth() + 1).toString().padStart(2, '0');
-
 const dateCreated = `${year}${month}`;
 
 export default function pages() {
 
-    const { clientes } = useAppContext()
-    const [cliente, setcliente] = useState("")
+    const { proveedor,user } = useAppContext()
+
+    const [provee, setprovee] = useState("")
     const [row, setrow] = useState([])
     const [form606, setform606] = useState({
-        cliente,
+        provee,
         dateCreated,
         totalRow: row.length,
         row
@@ -47,12 +47,13 @@ export default function pages() {
     const [Itbis, setItbis] = useState(false)
     const [Itbis2, setItbis2] = useState(false)
     const [Itbis10, setItbis10] = useState(false)
-    
+
+    console.log(user)
 
     useEffect(() => {
         setform606({
             ...form606,
-            cliente,
+            provee,
             totalRow: row.length,
             row
         })
@@ -60,6 +61,7 @@ export default function pages() {
 
     const handleReset = () => {
         setID("");
+        setRNC("");
         setbienes("")
         setNCF('');
         setDate("")
@@ -77,7 +79,7 @@ export default function pages() {
             ...row,
             {
                 id: NCF,
-                ID,
+                ID:provee.tipoID,
                 RNC,
                 bienes,
                 NCF,
@@ -93,11 +95,17 @@ export default function pages() {
         handleReset()
     }
 
+    const handleSelectProveedor=(rnc)=>{
+        setprovee(proveedor.find(prove => prove.rnc === rnc))
+
+    }
+
     const handleFinish = async (e) => {
 
        await  newForm606(form606);
         
-        window.location.href = '/pages/home/606';
+        window.location.href = '/pages/home/606'; 
+      
     }
 
     return (
@@ -109,41 +117,21 @@ export default function pages() {
 
                         {/* RNC/Cedula */}
                         <div class="sm:col-span-2">
-                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">RNC/Cedula *</label>
+                            <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Proveedor *</label>
                             <select id="category"
-                                onChange={(event) => setcliente(event.target.value)}
-                                disabled={cliente === "" ? false : true}
+                                onChange={(event) => handleSelectProveedor(event.target.value)}
+                                disabled={provee === "" ? false : true}
                                 required
                                 class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option value="">Seleccionar Cliente</option>
+                                <option value="">Seleccionar Proveedor</option>
                                 {
-                                    clientes.map(({ name, rnc }) => {
+                                    proveedor.map(({rnc, name}) => {
 
                                         return <option value={rnc}>{`${name} - ${rnc}`}</option>
                                     })
                                 }
 
                             </select>
-                        </div>
-
-                        {/* RNC O CEDULA */}
-                        <div class="w-full">
-                            <label for="TID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">RNC/Cedula *</label>
-                            <input type="number"
-                                onChange={(event) => setRNC(event.target.value)}
-                                value={RNC}
-                                required
-                                name="TID" id="TID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="ID" />
-                        </div>
-
-                        {/* Tipo de ID */}
-                        <div class="w-full">
-                            <label for="TID" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Tipo ID *</label>
-                            <input type="number"
-                                onChange={(event) => setID(event.target.value)}
-                                value={ID}
-                                required
-                                name="TID" id="TID" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-600 focus:border-primary-600 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="ID" />
                         </div>
 
                         {/*Bienes y servicios */}
@@ -233,7 +221,7 @@ export default function pages() {
                             <div class="flex items-center ">
                                 <input
 
-                                    onChange={(event) => setItbis2(event.target.value)}
+                                    onChange={(event) => setItbis2(!Itbis2)}
                                     checked={Itbis2 ? true : false}
                                     id="default-checkbox" type="checkbox" value={true} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <label for="default-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">2%</label>
@@ -241,7 +229,7 @@ export default function pages() {
                             <div class="flex items-center">
                                 <input
                                     checked={Itbis10 ? true : false}
-                                    onChange={(event) => setItbis10(event.target.value)}
+                                    onChange={(event) => setItbis10(!Itbis10)}
                                     id="checked-checkbox" type="checkbox" value={true} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <label for="checked-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">10%</label>
                             </div>
@@ -249,7 +237,7 @@ export default function pages() {
                                 <input
 
                                     checked={Itbis ? true : false}
-                                    onChange={(event) => setItbis(event.target.value)}
+                                    onChange={(event) => setItbis(!Itbis)}
                                     id="checked-checkbox" type="checkbox" value={true} class="w-4 h-4 text-blue-600 bg-gray-100 border-gray-300 rounded focus:ring-blue-500 dark:focus:ring-blue-600 dark:ring-offset-gray-800 focus:ring-2 dark:bg-gray-700 dark:border-gray-600" />
                                 <label for="checked-checkbox" class="ml-2 text-sm font-medium text-gray-900 dark:text-gray-300">18%</label>
                             </div>
