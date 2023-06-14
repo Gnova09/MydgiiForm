@@ -107,7 +107,7 @@ export default function pages() {
        
         newForm606(form606);
 
-        window.location.href = '/pages/home/606';
+        //window.location.href = '/pages/home/606';
     }
 
     return (

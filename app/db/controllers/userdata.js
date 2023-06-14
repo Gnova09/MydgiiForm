@@ -1,6 +1,6 @@
 import { db, auth } from "../firebase";
 import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
-import { addDoc, collection, doc, getDoc, getDocs, query, setDoc } from "firebase/firestore";
+import { arrayUnion, collection, doc, getDoc, getDocs, query, setDoc, updateDoc } from "firebase/firestore";
 
 
 export async function getUserByUid(uid) {
@@ -40,16 +40,23 @@ export function newUser(name, email, pass) {
 }
 
 //CREATE USER//
-export async function CreateUser(email, password, rnc = "") {
+export async function CreateUser({ email, password, name, rnc = "" }) {
 
     try {
         const userCredential = await createUserWithEmailAndPassword(auth, email, password);
         const user = userCredential.user;
         const reference = doc(db, "users", user.uid);
+        const forms = doc(db, "forms", user.uid);
 
         await setDoc(reference, {
             email,
             rnc,
+            name,
+            proveedor: []
+        })
+        await setDoc(forms,{
+            forms606:[],
+            forms607: []
         })
 
         console.log('Nuevo usuario creado con ID:', user.uid);
@@ -99,7 +106,6 @@ export async function authState(userFnc) {
     onAuthStateChanged(auth, userFnc)
 }
 
-
 export function newClient(rnc, name) {
 
     const reference = doc(db, "client", rnc);
@@ -117,17 +123,18 @@ export function newClient(rnc, name) {
 
 }
 
-export function newForm606(form) {
+export async function newForm606(form, uid = "bHQb3z9SkuPkyp7DAJEUlfYthDx1") {
 
-    const collectionRef = collection(db, 'forms606');
-
-    addDoc(collectionRef, form)
-        .then((docRef) => {
-            console.log('Nuevo formulario creado con ID:', docRef.id);
-        })
-        .catch((error) => {
-            console.error('Error al crear el formulario:', error);
+    try {
+        const documentRef = doc(db, 'forms606', uid);
+        await updateDoc(documentRef, {
+          forms606: arrayUnion(form)
         });
+        console.log('Nuevo formulario agregado al arreglo forms606');
+      } catch (error) {
+        console.error('Error al agregar el formulario:', error);
+      }
+
 }
 
 export async function getForm606() {
