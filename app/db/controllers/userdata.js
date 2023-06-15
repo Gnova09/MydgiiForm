@@ -54,8 +54,8 @@ export async function CreateUser({ email, password, name, rnc = "" }) {
             name,
             proveedor: []
         })
-        await setDoc(forms,{
-            forms606:[],
+        await setDoc(forms, {
+            forms606: [],
             forms607: []
         })
 
@@ -123,31 +123,45 @@ export function newClient(rnc, name) {
 
 }
 
-export async function newForm606(form, uid = "bHQb3z9SkuPkyp7DAJEUlfYthDx1") {
+export async function newForm606(form, uid = "") {
 
     try {
-        const documentRef = doc(db, 'forms606', uid);
+        const documentRef = doc(db, 'forms', uid);
         await updateDoc(documentRef, {
-          forms606: arrayUnion(form)
+            forms606: arrayUnion(form)
         });
         console.log('Nuevo formulario agregado al arreglo forms606');
-      } catch (error) {
+    } catch (error) {
         console.error('Error al agregar el formulario:', error);
-      }
+    }
 
 }
 
-export async function getForm606() {
+export async function getForm606(uid) {
 
-    const q = query(collection(db, "forms606"));
+    try {
+        const documentRef = doc(db, 'forms', uid);
+        const documentSnapshot = await getDoc(documentRef);
 
-    const querySnapshot = await getDocs(q);
-    const data = []
-    let n = 1
-    querySnapshot.forEach((doc) => {
-        // doc.data() is never undefined for query doc snapshots
-        data.push({ ...doc.data(), id: n++ })
-    });
-    return (data)
+        if (documentSnapshot.exists()) {
+            const data = []
+            let n = 1
+            const formdata =documentSnapshot.data()
+            
+            formdata.forms606.forEach((doc) => {
+                // doc.data() is never undefined for query doc snapshots
+                data.push({ ...doc, id: n++ })
+            });
+            return (data)
+        } else {
+            console.log('El formulario no existe');
+            return null;
+        }
+    } catch (error) {
+        console.error('Error al obtener el formulario:', error);
+        return null;
+    }
+
+
 
 }
