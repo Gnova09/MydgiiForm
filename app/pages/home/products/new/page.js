@@ -23,7 +23,7 @@ export default function page() {
     const handleSubmit = async (event) => {
         event.preventDefault();
        await newProducts(product, uid)
-        window.location.href = '/pages/home/606';
+        window.location.href = '/pages/home/products';
     }
 
     return (
