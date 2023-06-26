@@ -1,24 +1,29 @@
 "use client"
 import useAppContext from '@/app/context/context';
 import { newProducts } from '@/app/db/controllers/products';
-import React,{useState} from 'react'
+import React,{useEffect, useState} from 'react'
 
 
 
 export default function page() {
 
     const [product, setProduct] = useState();
+    const [uid, setUid] = useState();
     const {user} = useAppContext()
+
+    useEffect(()=>{
+        setUid(user.uid);
+    },[user])
     
     const handleChange = (event) => {
         const { name, value } = event.target;
-
         setProduct((prevData) => ({...prevData, [name]:value }))
     }
 
     const handleSubmit =  (event) => {
-        event.preventDefault();
-         newProducts(product, uid= user.uid)
+       event.preventDefault();
+          newProducts(product, uid) 
+        
     }
 
     return (
@@ -39,13 +44,17 @@ export default function page() {
 
                         <div>
                             <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
-                            <select id="category" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                                <option selected="">Select category</option>
+                            <select id="category" 
+                            name='categoria'
+                            required
+                            onChange={handleChange}
+                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="">Select category</option>
                                 <option value="TV">TV/Monitors</option>
                                 <option value="PC">PC</option>
-                                <option value="GA">Gaming/Console</option>
-                                <option value="PH">Phones</option>
-                                <option value="PH">Servicio</option>
+                                <option value="Gaming">Gaming/Console</option>
+                                <option value="Phones">Phones</option>
+                                <option value="Servicio">Servicio</option>
                             </select>
                         </div>
                         <div class="sm:col-span-2">
