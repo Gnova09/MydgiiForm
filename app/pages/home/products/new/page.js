@@ -1,7 +1,7 @@
 "use client"
 import useAppContext from '@/app/context/context';
 import { newProducts } from '@/app/db/controllers/products';
-import React,{useEffect, useState} from 'react'
+import React, { useEffect, useState } from 'react'
 
 
 
@@ -9,21 +9,21 @@ export default function page() {
 
     const [product, setProduct] = useState();
     const [uid, setUid] = useState();
-    const {user} = useAppContext()
+    const { user } = useAppContext()
 
-    useEffect(()=>{
+    useEffect(() => {
         setUid(user.uid);
-    },[user])
-    
+    }, [user])
+
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setProduct((prevData) => ({...prevData, [name]:value }))
+        setProduct((prevData) => ({ ...prevData, [name]: value }))
     }
 
-    const handleSubmit =  (event) => {
-       event.preventDefault();
-          newProducts(product, uid) 
-        
+    const handleSubmit = async (event) => {
+        event.preventDefault();
+       await newProducts(product, uid)
+        window.location.href = '/pages/home/606';
     }
 
     return (
@@ -44,11 +44,11 @@ export default function page() {
 
                         <div>
                             <label for="category" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Categoria</label>
-                            <select id="category" 
-                            name='categoria'
-                            required
-                            onChange={handleChange}
-                            class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                            <select id="category"
+                                name='categoria'
+                                required
+                                onChange={handleChange}
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                                 <option value="">Select category</option>
                                 <option value="TV">TV/Monitors</option>
                                 <option value="PC">PC</option>
