@@ -9,7 +9,7 @@ import { getProducts } from '@/app/db/controllers/products'
 const today = new Date();
 const year = today.getFullYear().toString();
 const month = (today.getMonth() + 1).toString().padStart(2, '0');
-const day  = today.getDay()
+const day = today.getDay()
 const dateCreated = `${year}${month}`;
 
 const column = [
@@ -55,11 +55,16 @@ const row = [
 export default function pages() {
     //STATE APP//
     const [proveedor, setProveedor] = useState();
+
     const [factura, setFactura] = useState();
+    const [cliente, setCliente] = useState({});
+    const [listOfProducts, setListOfProducts] = useState([]);
+    const [NewProduct, setNewProduct] = useState({})
+
+
     const [productData, setProductData] = useState([])
     const [facturaProduct, setFacturaProduct] = useState([])
     const [showNewProduct, setShowNewProduct] = useState(true)
-    const [NewProduct, setNewProduct] = useState({})
     const [cant, setCant] = useState(1)
 
     const { user } = useAppContext()
@@ -79,17 +84,24 @@ export default function pages() {
         setFactura((prevData) => ({ ...prevData, [name]: value }))
     }
 
+    const handleClienteChange = (event) =>{
+        const {name, value} = event.target
+        setCliente((prevData) => ({...prevData, [name]:value }))
+    }
+
     const handleChangeNewProduct = (event) => {
         const { name, value } = event.target
         setNewProduct((prevData) => ({ ...prevData, [name]: value }))
     }
-    
+
     const handleFinishNewproduct = (event) => {
-        event.preventDefault() 
+        event.preventDefault()
         setNewProduct((prevData) => ({ ...prevData, cant: cant }))
         console.log(NewProduct)
+        setFactura({cliente,listOfProducts})
+        console.log(factura)
     }
-    
+
     return (
         <div className="flex flex-col p-4 mt-14">
             <div className='flex flex-row justify-between mb-2'>
@@ -122,7 +134,7 @@ export default function pages() {
 
             <div className='flow flex-col bg-white items-center min-h-screen justify-center p-5'>
 
-                {/* New product */}
+                {/* New product TODO: MakeComponent */}
                 <div className={` ${showNewProduct ? "fixed" : "hidden"} flex flex-col items-center justify-center   right-0  p-5  w-64 z-50 bg-white border-2 border-black rounded-md `}>
                     <h1 className=' font-semibold text-xl mb-3'>
                         Producto o Servicio
@@ -138,7 +150,7 @@ export default function pages() {
                                 {
                                     productData ? productData.map(({ name, precio }) => {
 
-                                        return <option value={name}>{`${name} - RD$${precio}`}</option>
+                                        return <option value={ {name,precio} }>{`${name} - RD$${precio}`}</option>
                                     })
                                         : <option value="">Cargando productos...</option>
                                 }
@@ -155,9 +167,9 @@ export default function pages() {
                             </button>
 
                             <label
-                            name="cant"
-                            onChange={handleChangeNewProduct}
-                            value={cant}
+                                name="cant"
+                                onChange={handleChangeNewProduct}
+                                value={cant}
                             >{cant}</label>
 
                             <button
@@ -180,6 +192,10 @@ export default function pages() {
                                 <label>0</label>
                             </span>
                         </div>
+                        <span className='flex justify-between'>
+                            <label>Total:</label>
+                            <label>0</label>
+                        </span>
 
                         <button
                             type='submit'
@@ -195,7 +211,8 @@ export default function pages() {
                 {/* New product */}
 
                 <div className='p-3'>
-                    {/* Datos del cliente */}
+
+                    {/* Datos del cliente TODO: MakeComponent */}
                     <div className=" border-b p-3 border-gray-400 ">
                         <h1 className='font-bold text-xl mb-5'>Cliente</h1>
                         <form className='flex justify-between gap-6 flex-row'>
@@ -205,7 +222,7 @@ export default function pages() {
                                     type="text"
                                     id="name"
                                     name='name'
-                                    onChange={handleChange}
+                                    onChange={handleClienteChange}
                                     value=""
                                     required
                                     class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
@@ -219,7 +236,7 @@ export default function pages() {
                                     type="text"
                                     id="rnc"
                                     name='rnc'
-                                    onChange={handleChange}
+                                    onChange={handleClienteChange}
                                     value=""
                                     required
                                     class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="00123456789" />
@@ -232,7 +249,7 @@ export default function pages() {
                                     type="text"
                                     id="tel"
                                     name='tel'
-                                    onChange={handleChange}
+                                    onChange={handleClienteChange}
                                     value=""
                                     class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                                     placeholder="809 786 4567" />
@@ -251,7 +268,7 @@ export default function pages() {
                     <div className='flex justify-between'>
 
                         <button
-                            onClick={()=>setShowNewProduct(true)}
+                            onClick={() => setShowNewProduct(true)}
                             class="flex flex-row  text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
