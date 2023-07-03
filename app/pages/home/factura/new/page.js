@@ -9,6 +9,7 @@ import { getProducts } from '@/app/db/controllers/products'
 const today = new Date();
 const year = today.getFullYear().toString();
 const month = (today.getMonth() + 1).toString().padStart(2, '0');
+const day  = today.getDay()
 const dateCreated = `${year}${month}`;
 
 const column = [
@@ -56,9 +57,12 @@ export default function pages() {
     const [proveedor, setProveedor] = useState();
     const [factura, setFactura] = useState();
     const [productData, setProductData] = useState([])
+    const [facturaProduct, setFacturaProduct] = useState([])
+    const [showNewProduct, setShowNewProduct] = useState(true)
+    const [NewProduct, setNewProduct] = useState({})
+    const [cant, setCant] = useState(1)
 
     const { user } = useAppContext()
-
 
     const fetchData = async () => {
         const rowData = await getProducts(user.uid);
@@ -75,9 +79,19 @@ export default function pages() {
         setFactura((prevData) => ({ ...prevData, [name]: value }))
     }
 
+    const handleChangeNewProduct = (event) => {
+        const { name, value } = event.target
+        setNewProduct((prevData) => ({ ...prevData, [name]: value }))
+    }
+    
+    const handleFinishNewproduct = (event) => {
+        event.preventDefault() 
+        setNewProduct((prevData) => ({ ...prevData, cant: cant }))
+        console.log(NewProduct)
+    }
+    
     return (
         <div className="flex flex-col p-4 mt-14">
-             
             <div className='flex flex-row justify-between mb-2'>
                 <h1 className=' font-bold text-2xl '>Productos</h1>
                 <div className='flex gap-2 '>
@@ -107,28 +121,81 @@ export default function pages() {
             </div>
 
             <div className='flow flex-col bg-white items-center min-h-screen justify-center p-5'>
-            <NewProductForm isDisplay={true} productos={productData} />
-                {/*   RNC/Cedula 
-                <div class="sm:col-span-2">
-                    <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Proveedor *</label>
-                    <select id="category"
-                        onChange={handleChange}
-                        name='cliente'
-                        required
-                        class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
-                        <option value="">Seleccionar Proveedor</option>
-                        {
-                            proveedor ?
-                                proveedor.map(({ rnc, name }) => {
 
-                                    return <option value={rnc}>{`${name} - ${rnc}`}</option>
-                                }) :
-                                <option value="">Cargando proveedores...</option>
-                        }
-                    </select>
-                </div> */}
+                {/* New product */}
+                <div className={` ${showNewProduct ? "fixed" : "hidden"} flex flex-col items-center justify-center   right-0  p-5  w-64 z-50 bg-white border-2 border-black rounded-md `}>
+                    <h1 className=' font-semibold text-xl mb-3'>
+                        Producto o Servicio
+                    </h1>
+                    <form className='flex flex-col gap-4 ' onSubmit={handleFinishNewproduct} >
+                        <div class="sm:col-span-2">
+                            <select id="category"
+                                name='product'
+                                onChange={handleChangeNewProduct}
+                                required
+                                class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
+                                <option value="">Seleccionar productos</option>
+                                {
+                                    productData ? productData.map(({ name, precio }) => {
+
+                                        return <option value={name}>{`${name} - RD$${precio}`}</option>
+                                    })
+                                        : <option value="">Cargando productos...</option>
+                                }
+                            </select>
+
+                        </div>
+                        <div className='flex flex-row justify-between'>
+                            <button
+                                onClick={() => { cant > 1 ? setCant(cant - 1) : console.log("cant min") }}
+                                type='button'
+                                class="inline-flex items-center px-2 py-1.5 text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+                                <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M137.4 406.6l-128-127.1C3.125 272.4 0 264.2 0 255.1s3.125-16.38 9.375-22.63l128-127.1c9.156-9.156 22.91-11.9 34.88-6.943S192 115.1 192 128v255.1c0 12.94-7.781 24.62-19.75 29.58S146.5 415.8 137.4 406.6z" /></svg>
+                                <span class="sr-only">Arrow key left</span>
+                            </button>
+
+                            <label
+                            name="cant"
+                            onChange={handleChangeNewProduct}
+                            value={cant}
+                            >{cant}</label>
+
+                            <button
+                                onClick={() => { setCant(cant + 1) }}
+                                type='button'
+                                class="inline-flex items-center px-2 py-1.5 text-gray-800 bg-gray-100 border border-gray-200 rounded-lg dark:bg-gray-600 dark:text-gray-100 dark:border-gray-500">
+                                <svg class="w-4 h-4" aria-hidden="true" fill="currentColor" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 256 512"><path d="M118.6 105.4l128 127.1C252.9 239.6 256 247.8 256 255.1s-3.125 16.38-9.375 22.63l-128 127.1c-9.156 9.156-22.91 11.9-34.88 6.943S64 396.9 64 383.1V128c0-12.94 7.781-24.62 19.75-29.58S109.5 96.23 118.6 105.4z" /></svg>
+                                <span class="sr-only">Arrow key right</span>
+                            </button>
+                        </div>
+                        <div className='flex flex-col border-b p-3 border-gray-400 ' >
+                            <span className='flex justify-between'>
+                                <label>
+                                    Subtotal:
+                                </label>
+                                <label>0</label>
+                            </span>
+                            <span className='flex justify-between'>
+                                <label>Itbis:</label>
+                                <label>0</label>
+                            </span>
+                        </div>
+
+                        <button
+                            type='submit'
+                            class="flex flex-row justify-center text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
+                        >
+
+                            <span className='ml-2'>
+                                Finalizar
+                            </span>
+                        </button>
+                    </form>
+                </div>
+                {/* New product */}
 
                 <div className='p-3'>
+                    {/* Datos del cliente */}
                     <div className=" border-b p-3 border-gray-400 ">
                         <h1 className='font-bold text-xl mb-5'>Cliente</h1>
                         <form className='flex justify-between gap-6 flex-row'>
@@ -174,12 +241,17 @@ export default function pages() {
                         </form>
 
                     </div>
+
+                    {/* Tabla de facturas */}
                     <div className='my-4'>
                         <DataTable column={column} row={row} />
                     </div>
+
+                    {/* Bottones */}
                     <div className='flex justify-between'>
-                       
+
                         <button
+                            onClick={()=>setShowNewProduct(true)}
                             class="flex flex-row  text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -194,8 +266,8 @@ export default function pages() {
                         <button
                             class="flex flex-row  text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
                         >
-                            <svg xmlns="http://www.w3.org/2000/svg"  width="20"  viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                                
+                            <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+
                                 <path d="M 42.875 8.625 C 42.84375 8.632813 42.8125 8.644531 42.78125 8.65625 C 42.519531 8.722656 42.292969 8.890625 42.15625 9.125 L 21.71875 40.8125 L 7.65625 28.125 C 7.410156 27.8125 7 27.675781 6.613281 27.777344 C 6.226563 27.878906 5.941406 28.203125 5.882813 28.597656 C 5.824219 28.992188 6.003906 29.382813 6.34375 29.59375 L 21.25 43.09375 C 21.46875 43.285156 21.761719 43.371094 22.050781 43.328125 C 22.339844 43.285156 22.59375 43.121094 22.75 42.875 L 43.84375 10.1875 C 44.074219 9.859375 44.085938 9.425781 43.875 9.085938 C 43.664063 8.746094 43.269531 8.566406 42.875 8.625 Z"></path>
                             </svg>
 

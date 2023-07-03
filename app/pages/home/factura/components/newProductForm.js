@@ -37,16 +37,16 @@ const NewProductForm = ({ isDisplay, productos }) => {
                     </kbd>
                 </div>
                 <div className='flex flex-col border-b p-3 border-gray-400 ' >
-                    <span className='flex justify-between'>
+                    <button className='flex justify-between'>
                         <label>
                             Subtotal:
                         </label>
                         <label>0</label>
-                    </span>
-                    <span className='flex justify-between'>
+                    </button>
+                    <button className='flex justify-between'>
                         <label>Itbis:</label>
                         <label>0</label>
-                    </span>
+                    </button>
                 </div>
 
                 <button
