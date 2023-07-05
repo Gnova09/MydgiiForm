@@ -11,7 +11,7 @@ const today = new Date();
 const year = today.getFullYear().toString();
 const month = (today.getMonth() + 1).toString().padStart(2, '0');
 const day = today.getDay()
-const dateCreated = `${year}${month}${day}`;
+const dateCreated = `${day}/${month}/${year}`;
 
 const column = [
 
@@ -21,27 +21,10 @@ const column = [
     { field: 'description', headerName: 'Descripcion', width: 170 },
     { field: 'precio', headerName: 'Precio($RD)', width: 170 },
     { field: 'subtotal', headerName: 'SubTotal', width: 170 },
+    { field: 'itbis', headerName: 'ITBIS(18%)', width: 170 },
     { field: 'total', headerName: 'Total', width: 170 },
-    {
-        field: 'actions',
-        headerName: 'Descargar',
-        width: 100,
-        renderCell: (params) => (
-            <div className='flex items-center justify-center w-[100px]'>
 
-                <button variant="contained"
-                    className='flex items-center w-8 h-8'
-                    color="primary" onClick={() => console.log("clic")}>
-                    <svg fill="none" stroke="currentColor" stroke-width="1.5" viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
-                        <path stroke-linecap="round" stroke-linejoin="round" d="M19.5 14.25v-2.625a3.375 3.375 0 00-3.375-3.375h-1.5A1.125 1.125 0 0113.5 7.125v-1.5a3.375 3.375 0 00-3.375-3.375H8.25m.75 12l3 3m0 0l3-3m-3 3v-6m-1.5-9H5.625c-.621 0-1.125.504-1.125 1.125v17.25c0 .621.504 1.125 1.125 1.125h12.75c.621 0 1.125-.504 1.125-1.125V11.25a9 9 0 00-9-9z"></path>
-                    </svg>
-                </button>
-            </div>
-        ),
-    },
 ]
-
-
 
 export default function pages() {
     //STATE APP//
@@ -50,16 +33,16 @@ export default function pages() {
     const [factura, setFactura] = useState();
     const [cliente, setCliente] = useState({});
 
-    
+
     const [productData, setProductData] = useState([])
     const [listOfProducts, setListOfProducts] = useState([]);
     const [showNewProduct, setShowNewProduct] = useState(false)
 
     const { user } = useAppContext()
 
-    const row = listOfProducts.map((product,indice)=>{
+    const row = listOfProducts.map((product, indice) => {
         return {
-            id:indice + 1,
+            id: indice + 1,
             ...product
         }
     })
@@ -74,17 +57,23 @@ export default function pages() {
         fetchData();
     }, [user])
 
+    useEffect(() => {
+        setFactura({
+            ...cliente,
+            listOfProducts,
+            dateCreated,
+        })
+    }, [cliente, listOfProducts, dateCreated])
+
     const handleClienteChange = (event) => {
         const { name, value } = event.target
         setCliente((prevData) => ({ ...prevData, [name]: value }))
     }
 
-   
-
     return (
         <div className="flex flex-col p-4 mt-14">
             <div className='flex flex-row justify-between mb-2'>
-                <h1 className=' font-bold text-2xl '>Productos</h1>
+                <h1 className=' font-bold text-2xl '>Nueva Factura</h1>
                 <div className='flex gap-2 '>
 
                     <button
@@ -113,7 +102,7 @@ export default function pages() {
 
             <div className='flow flex-col bg-white items-center min-h-screen justify-center p-5'>
 
-               <NewProductForm showNewProduct={showNewProduct} cerrar={()=>{setShowNewProduct(false)}}   productos={productData} agregarProducto={setListOfProducts}/>
+                <NewProductForm showNewProduct={showNewProduct} cerrar={() => { setShowNewProduct(false) }} productos={productData} agregarProducto={setListOfProducts} />
 
                 <div className='p-3'>
 
@@ -128,9 +117,8 @@ export default function pages() {
                                     id="name"
                                     name='name'
                                     onChange={handleClienteChange}
-                                    value=""
                                     required
-                                    class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                                    class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-400 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
                                     placeholder="John Doe" />
                             </div>
                             <span class=" border-l  border-gray-400">
@@ -142,9 +130,8 @@ export default function pages() {
                                     id="rnc"
                                     name='rnc'
                                     onChange={handleClienteChange}
-                                    value=""
                                     required
-                                    class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="00123456789" />
+                                    class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-400 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light" placeholder="00123456789" />
                             </div>
                             <span class=" border-l border-gray-400">
                             </span>
@@ -155,12 +142,14 @@ export default function pages() {
                                     id="tel"
                                     name='tel'
                                     onChange={handleClienteChange}
-                                    value=""
-                                    class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-300 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
-                                    placeholder="809 786 4567" />
+                                    class="block p-3 w-full text-sm text-gray-900 bg-gray-50 rounded-lg border border-gray-400 shadow-sm focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500 dark:shadow-sm-light"
+                                    placeholder="809 786 4567"
+                                />
                             </div>
 
                         </form>
+
+
 
                     </div>
 
@@ -169,12 +158,22 @@ export default function pages() {
                         <DataTable column={column} row={row} />
                     </div>
 
+                    {/* Nota de la factura */}
+                    <div class="py-2 px-4 mb-4 mt-4 bg-white rounded-lg rounded-t-lg border border-gray-400 dark:bg-gray-800 dark:border-gray-700">
+                        <label for="comment" class=" sr-only">Nota de la factura</label>
+                        <textarea id="comment" rows="6"
+                            onChange={handleClienteChange}
+                            name='nota'
+                            class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
+                            placeholder="Agregar una nota a la factura" required></textarea>
+                    </div>
+
                     {/* Bottones */}
                     <div className='flex justify-between'>
 
                         <button
                             onClick={() => setShowNewProduct(true)}
-                            class="flex flex-row  text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
+                            class="flex flex-row text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                                 <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
@@ -186,6 +185,7 @@ export default function pages() {
                         </button>
 
                         <button
+                            onClick={() => console.log(factura)}
                             class="flex flex-row  text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
