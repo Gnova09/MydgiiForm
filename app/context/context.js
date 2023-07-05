@@ -10,6 +10,11 @@ export const AppContext = createContext();
 //Provider
 export const AppContextProvider = ({ children }) => {
     //Estados de mi aplicacion
+
+    //TOAST NOTIFICATION
+    const [showToast, setShowToast] = useState(false);
+    const [textToast, setTextToast] = useState("");
+
     const [islogin, setIslogin] = useState(false);
     const [IsOpenSidebar, setIsOpenSidebar] = useState();
     const [IsOpenAvatarmenu, setIsOpenAvatarmenu] = useState(false);
@@ -63,7 +68,12 @@ export const AppContextProvider = ({ children }) => {
             newform, setnewform,
             islogin, setIslogin,
             user, setuser,
-            verifyLogin
+            verifyLogin,
+            toast:{
+                showToast, setShowToast,
+                textToast, setTextToast
+            }
+
         }));   // States que serán visibles en el contexto.
 
     // Interface donde será expuesto como proveedor y envolverá la App.

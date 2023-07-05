@@ -4,7 +4,8 @@ import DataTable from '../../../../components/table'
 import useAppContext from '@/app/context/context'
 import NewProductForm from '../components/newProductForm'
 import { getProducts } from '@/app/db/controllers/products'
-
+import { newFactura } from '@/app/db/controllers/facturas'
+import { formatearCantidadDeDinero } from '@/app/helpers/formatDinero'
 
 
 const today = new Date();
@@ -13,39 +14,124 @@ const month = (today.getMonth() + 1).toString().padStart(2, '0');
 const day = today.getDay()
 const dateCreated = `${day}/${month}/${year}`;
 
-const column = [
 
-    { field: 'id', headerName: '#', width: 50 },
-    { field: 'cant', headerName: 'Cantidad', width: 100 },
-    { field: 'name', headerName: 'Nombre', width: 130 },
-    { field: 'description', headerName: 'Descripcion', width: 170 },
-    { field: 'precio', headerName: 'Precio($RD)', width: 170 },
-    { field: 'subtotal', headerName: 'SubTotal', width: 170 },
-    { field: 'itbis', headerName: 'ITBIS(18%)', width: 170 },
-    { field: 'total', headerName: 'Total', width: 170 },
-
-]
 
 export default function pages() {
     //STATE APP//
     const [proveedor, setProveedor] = useState();
 
     const [factura, setFactura] = useState();
-    const [cliente, setCliente] = useState({});
-
+    const [Tsubtotal, setTsubtotal] = useState(0)
+    const [Titbis, setTitbis] = useState(0)
+    const [fTotal, setFTotal] = useState(0)
+    const [cliente, setCliente] = useState({
+        name: "",
+        nota: "",
+        rnc: "",
+        tel: ""
+    });
 
     const [productData, setProductData] = useState([])
     const [listOfProducts, setListOfProducts] = useState([]);
     const [showNewProduct, setShowNewProduct] = useState(false)
+    const [row, setRow] = useState([])
 
-    const { user } = useAppContext()
+    const { user, toast } = useAppContext()
+    const { setTextToast, setShowToast } = toast
 
-    const row = listOfProducts.map((product, indice) => {
-        return {
-            id: indice + 1,
-            ...product
+    const toastCall = (text) => {
+        setTextToast(text);
+        setShowToast(true);
+
+        setTimeout(() => {
+            setShowToast(false);
+            setTextToast("");
+        }, 3000);
+    };
+
+
+    //Estructura de la tabla
+    const eliminarObjeto = (indice) => {
+        const nuevoArreglo = listOfProducts.filter((_, index) => index !== (indice-1));
+        setListOfProducts(nuevoArreglo);
+    };
+
+    const TableData = () => {
+        setRow(
+            listOfProducts.map((product, indice) => {
+                return {
+                    id: indice + 1,
+                    ...product,
+                    total: formatearCantidadDeDinero(product.total),
+                    itbis: formatearCantidadDeDinero(product.itbis),
+                    subtotal: formatearCantidadDeDinero(product.subtotal),
+                    precio: formatearCantidadDeDinero(product.precio),
+                }
+            })
+        )
+    }
+
+    const column = [
+
+        { field: 'id', headerName: '#', width: 50 },
+        { field: 'cant', headerName: 'Cantidad', width: 100 },
+        { field: 'name', headerName: 'Nombre', width: 130 },
+        { field: 'description', headerName: 'Descripcion', width: 170 },
+        { field: 'precio', headerName: 'Precio($RD)', width: 170 },
+        { field: 'subtotal', headerName: 'SubTotal', width: 170 },
+        { field: 'itbis', headerName: 'ITBIS(18%)', width: 170 },
+        { field: 'total', headerName: 'Total', width: 170 },
+        {
+            field: 'actions',
+            headerName: 'Delete',
+            width: 100,
+            renderCell: (params) => (
+                <div className='flex items-center justify-center w-fit'>
+                    <button variant="contained"
+                        className='flex items-center w-8 h-8  justify-center'
+                        type='button'
+                        color="primary" onClick={() => eliminarObjeto(params.id)}>
+                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
+                            <line x1="18" y1="6" x2="6" y2="18" />
+                            <line x1="6" y1="6" x2="18" y2="18" />
+                        </svg>
+                    </button>
+                </div>
+            ),
+        },
+
+    ]
+
+
+
+    const calcFactura = () => {
+
+        if (listOfProducts.length > 0) {
+
+            const totalPrecios = listOfProducts.reduce((acumulador, producto) => acumulador + producto.precio, 0);
+            const totalSubtotal = listOfProducts.reduce((acumulador, producto) => acumulador + producto.subtotal, 0);
+            const totalItbis = listOfProducts.reduce((acumulador, producto) => acumulador + producto.itbis, 0);
+
+            setFTotal(totalPrecios)
+            setTitbis(totalItbis)
+            setTsubtotal(totalSubtotal)
+
+           /*  listOfProducts.map(({ itbis, subtotal, total }) => {
+
+                const ft =  (Number(total) + Number(fTotal)).toFixed(2)
+
+                const Tit = (Number(Titbis) + Number(itbis)).toFixed(2)
+
+                const Tsub = (Number(subtotal) + Number(Tsubtotal)).toFixed(2)
+            }) */
+
+        } else {
+
+            setTitbis(0)
+            setFTotal(0)
+            setTsubtotal(0)
         }
-    })
+    }
 
     const fetchData = async () => {
         const rowData = await getProducts(user.uid);
@@ -58,16 +144,28 @@ export default function pages() {
     }, [user])
 
     useEffect(() => {
+        calcFactura()
+        TableData()
         setFactura({
             ...cliente,
             listOfProducts,
             dateCreated,
+            fTotal,
+            Titbis,
+            Tsubtotal
         })
     }, [cliente, listOfProducts, dateCreated])
 
     const handleClienteChange = (event) => {
         const { name, value } = event.target
         setCliente((prevData) => ({ ...prevData, [name]: value }))
+    }
+
+    const handleFinish = (event) => {
+        event.preventDefault()
+       
+        listOfProducts.length === 0 ? toastCall("Debe agregar productos") :
+            newFactura({ factura, uid: user.uid }) 
     }
 
     return (
@@ -104,12 +202,12 @@ export default function pages() {
 
                 <NewProductForm showNewProduct={showNewProduct} cerrar={() => { setShowNewProduct(false) }} productos={productData} agregarProducto={setListOfProducts} />
 
-                <div className='p-3'>
+                <form className='p-3' onSubmit={handleFinish}>
 
                     {/* Datos del cliente TODO: MakeComponent */}
                     <div className=" border-b p-3 border-gray-400 ">
                         <h1 className='font-bold text-xl mb-5'>Cliente</h1>
-                        <form className='flex justify-between gap-6 flex-row'>
+                        <div className='flex justify-between gap-6 flex-row'>
                             <div>
                                 <label for="name" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombre*</label>
                                 <input
@@ -147,7 +245,7 @@ export default function pages() {
                                 />
                             </div>
 
-                        </form>
+                        </div>
 
 
 
@@ -157,6 +255,26 @@ export default function pages() {
                     <div className='my-4'>
                         <DataTable column={column} row={row} />
                     </div>
+                    {/* Totales de la factura */}
+                    <div className='my-4'>
+                        <div className='flex flex-col border-b p-3 border-gray-400 ' >
+                            <span className='flex justify-between'>
+                                <label>
+                                    Subtotal:
+                                </label>
+                                <label> {formatearCantidadDeDinero(Tsubtotal)}</label>
+                            </span>
+                            <span className='flex justify-between'>
+                                <label>Itbis:</label>
+                                <label> {formatearCantidadDeDinero(Titbis)}</label>
+                            </span>
+                            <span className='flex justify-between'>
+                                <label>Total:</label>
+                                <label> {formatearCantidadDeDinero(fTotal)}</label>
+                            </span>
+                        </div>
+                    </div>
+
 
                     {/* Nota de la factura */}
                     <div class="py-2 px-4 mb-4 mt-4 bg-white rounded-lg rounded-t-lg border border-gray-400 dark:bg-gray-800 dark:border-gray-700">
@@ -165,13 +283,14 @@ export default function pages() {
                             onChange={handleClienteChange}
                             name='nota'
                             class="px-0 w-full text-sm text-gray-900 border-0 focus:ring-0 focus:outline-none dark:text-white dark:placeholder-gray-400 dark:bg-gray-800"
-                            placeholder="Agregar una nota a la factura" required></textarea>
+                            placeholder="Agregar una nota a la factura" ></textarea>
                     </div>
 
                     {/* Bottones */}
                     <div className='flex justify-between'>
 
                         <button
+                            type='button'
                             onClick={() => setShowNewProduct(true)}
                             class="flex flex-row text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
                         >
@@ -185,7 +304,7 @@ export default function pages() {
                         </button>
 
                         <button
-                            onClick={() => console.log(factura)}
+                            type='submit'
                             class="flex flex-row  text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
@@ -198,7 +317,7 @@ export default function pages() {
                             </span>
                         </button>
                     </div>
-                </div>
+                </form>
             </div>
         </div>
     )

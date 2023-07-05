@@ -2,6 +2,7 @@
 import React from 'react'
 import Navbar from './components/navbar/navbar';
 import Sidebar from './components/sidebar/sidebar';
+import { ToastSuccess } from './components/toast/toast';
 
 const Navigation = ({children}) => {
 
@@ -13,6 +14,7 @@ const Navigation = ({children}) => {
 
             <div class="p-4 sm:ml-64">
             {children}
+            <ToastSuccess />
             </div>
 
             <Sidebar />

@@ -17,12 +17,19 @@ export default function page() {
 
     const handleChange = (event) => {
         const { name, value } = event.target;
-        setProduct((prevData) => ({ ...prevData, [name]: value }))
+        if(name === "precio"){
+            const valor = parseFloat(value)
+            setProduct((prevData) => ({ ...prevData, [name]: valor }))
+            
+        }else{
+
+            setProduct((prevData) => ({ ...prevData, [name]: value }))
+        }
     }
 
     const handleSubmit = async (event) => {
         event.preventDefault();
-       await newProducts(product, uid)
+        await newProducts(product, uid)
         window.location.href = '/pages/home/products';
     }
 

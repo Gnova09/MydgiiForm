@@ -48,6 +48,7 @@ export async function CreateUser({ email, password, name, rnc = "" }) {
         const reference = doc(db, "users", user.uid);
         const forms = doc(db, "forms", user.uid);
         const products = doc(db, "products", user.uid);
+        const facturas = doc(db, "facturas", user.uid);
 
         await setDoc(reference, {
             email,
@@ -59,7 +60,12 @@ export async function CreateUser({ email, password, name, rnc = "" }) {
             forms606: [],
             forms607: []
         })
-        await setDoc(products, {products:[]})
+        await setDoc(products, {
+            products:[]
+        })
+        await setDoc(facturas, {
+            facturas:[]
+        })
 
         console.log('Nuevo usuario creado con ID:', user.uid);
         return { user: { ...user, rnc } };

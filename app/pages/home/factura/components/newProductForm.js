@@ -1,6 +1,7 @@
 "use client"
 
 import React, { useState, useEffect, useRef } from 'react'
+import { formatearCantidadDeDinero } from '@/app/helpers/formatDinero';
 
 const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) => {
 
@@ -13,13 +14,14 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
     const [itbis, setItbis] = useState(0)
 
     const calcTotal = () => {
-        let subtotaln = ((selectedProduct?.precio ?? 0) * cant).toFixed(2)
+        let subtotaln = Number(((selectedProduct?.precio ?? 0) * cant).toFixed(2))
         setSubTotal(subtotaln)
 
-        let itbisn = (subtotaln * 0.18).toFixed(2)
+        let itbisn = Number((subtotaln * 0.18).toFixed(2))
         setItbis(itbisn)
-
-        setTotal((Number(subtotaln) + Number(itbisn)).toFixed(2))
+        
+        let total = (subtotaln + itbisn)
+        setTotal(Number(total.toFixed(2)))
     }
 
 
@@ -27,23 +29,7 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
         calcTotal()
     }, [selectedProduct, cant])
 
-    function formatearCantidadDeDinero(cantidad) {
-        // Convertir la cantidad a texto
-        const cantidadTexto = String(cantidad);
 
-        // Separar la parte entera de la parte decimal (si existe)
-        const partes = cantidadTexto.split(".");
-        let parteEntera = partes[0];
-        let parteDecimal = partes[1] || "";
-
-        // Agregar las comas a la parte entera
-        parteEntera = parteEntera.replace(/\B(?=(\d{3})+(?!\d))/g, ",");
-
-        // Unir la parte entera y la parte decimal (si existe)
-        const cantidadFormateada = parteDecimal ? `${parteEntera}.${parteDecimal}` : parteEntera;
-
-        return cantidadFormateada;
-    }
 
     const handleSelectNewProduct = (event) => {
         const selectedIndex = event.target.selectedIndex;
@@ -64,7 +50,7 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
         agregarProducto((prevData) => ([...prevData, { total, subtotal, itbis, ...selectedProduct, cant }]))
 
         ResetValues()
-        // setShowNewProduct(false)
+        // setShowNewProduct(false) 
 
     }
 
@@ -74,7 +60,7 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
                 ResetValues()
                 cerrar()
             }}
-            className=' w-5 absolute right-1 top-1 hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0'
+                className=' w-5 absolute right-1 top-1 hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0'
             >
                 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
                     <line x1="18" y1="6" x2="6" y2="18" />
