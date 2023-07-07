@@ -6,6 +6,7 @@ import NewProductForm from '../components/newProductForm'
 import { getProducts } from '@/app/db/controllers/products'
 import { newFactura } from '@/app/db/controllers/facturas'
 import { formatearCantidadDeDinero } from '@/app/helpers/formatDinero'
+import BtnDefault from '@/app/components/btn'
 
 
 const today = new Date();
@@ -49,10 +50,9 @@ export default function pages() {
         }, 3000);
     };
 
-
     //Estructura de la tabla
     const eliminarObjeto = (indice) => {
-        const nuevoArreglo = listOfProducts.filter((_, index) => index !== (indice-1));
+        const nuevoArreglo = listOfProducts.filter((_, index) => index !== (indice - 1));
         setListOfProducts(nuevoArreglo);
     };
 
@@ -103,7 +103,6 @@ export default function pages() {
     ]
 
 
-
     const calcFactura = () => {
 
         if (listOfProducts.length > 0) {
@@ -116,14 +115,14 @@ export default function pages() {
             setTitbis(totalItbis)
             setTsubtotal(totalSubtotal)
 
-           /*  listOfProducts.map(({ itbis, subtotal, total }) => {
-
-                const ft =  (Number(total) + Number(fTotal)).toFixed(2)
-
-                const Tit = (Number(Titbis) + Number(itbis)).toFixed(2)
-
-                const Tsub = (Number(subtotal) + Number(Tsubtotal)).toFixed(2)
-            }) */
+            /*  listOfProducts.map(({ itbis, subtotal, total }) => {
+ 
+                 const ft =  (Number(total) + Number(fTotal)).toFixed(2)
+ 
+                 const Tit = (Number(Titbis) + Number(itbis)).toFixed(2)
+ 
+                 const Tsub = (Number(subtotal) + Number(Tsubtotal)).toFixed(2)
+             }) */
 
         } else {
 
@@ -161,11 +160,16 @@ export default function pages() {
         setCliente((prevData) => ({ ...prevData, [name]: value }))
     }
 
-    const handleFinish = (event) => {
+    const handleFinish = async (event) => {
         event.preventDefault()
-       
-        listOfProducts.length === 0 ? toastCall("Debe agregar productos") :
-            newFactura({ factura, uid: user.uid }) 
+
+        if (listOfProducts.length === 0) { toastCall("Debe agregar productos") }
+        else {
+            await newFactura({ factura, uid: user.uid })
+            window.location.href = "/pages/home/factura"
+        };
+
+
     }
 
     return (
@@ -289,7 +293,7 @@ export default function pages() {
                     {/* Bottones */}
                     <div className='flex justify-between'>
 
-                        <button
+                        {/*  <button
                             type='button'
                             onClick={() => setShowNewProduct(true)}
                             class="flex flex-row text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
@@ -302,7 +306,16 @@ export default function pages() {
                                 Agregar producto
                             </span>
                         </button>
+                        */}
 
+                        <BtnDefault action={() => setShowNewProduct(true)} tittle="Agregar Producto" 
+                        icon={
+                        <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                            <path d="M12 8v8M8 12h8" />
+                        </svg>} />
+
+                       
                         <button
                             type='submit'
                             class="flex flex-row  text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
