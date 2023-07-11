@@ -14,14 +14,14 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
     const [itbis, setItbis] = useState(0)
 
     const calcTotal = () => {
-        let subtotaln = Number(((selectedProduct?.precio ?? 0) * cant).toFixed(2))
+        let subtotaln = formatearCantidadDeDinero((selectedProduct?.precio ?? 0) * cant)
         setSubTotal(subtotaln)
 
-        let itbisn = Number((subtotaln * 0.18).toFixed(2))
+        let itbisn = formatearCantidadDeDinero(subtotaln * 0.18)
         setItbis(itbisn)
         
-        let total = (subtotaln + itbisn)
-        setTotal(Number(total.toFixed(2)))
+        let total = formatearCantidadDeDinero(subtotaln + itbisn)
+        setTotal(total)
     }
 
 
@@ -116,16 +116,16 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
                         <label>
                             Subtotal:
                         </label>
-                        <label> {formatearCantidadDeDinero(subtotal)}</label>
+                        <label> {subtotal}</label>
                     </span>
                     <span className='flex justify-between'>
                         <label>Itbis:</label>
-                        <label> {formatearCantidadDeDinero(itbis)}</label>
+                        <label> {itbis}</label>
                     </span>
                 </div>
                 <span className='flex justify-between'>
                     <label>Total(RD$):</label>
-                    <label>{formatearCantidadDeDinero(total)}</label>
+                    <label>{total}</label>
                 </span>
 
                 <button

@@ -62,10 +62,10 @@ export default function pages() {
                 return {
                     id: indice + 1,
                     ...product,
-                    total: formatearCantidadDeDinero(product.total),
-                    itbis: formatearCantidadDeDinero(product.itbis),
-                    subtotal: formatearCantidadDeDinero(product.subtotal),
-                    precio: formatearCantidadDeDinero(product.precio),
+                    total: product.total,
+                    itbis: product.itbis,
+                    subtotal: product.subtotal,
+                    precio: product.precio,
                 }
             })
         )
@@ -107,13 +107,13 @@ export default function pages() {
 
         if (listOfProducts.length > 0) {
 
-            const totalPrecios = listOfProducts.reduce((acumulador, producto) => acumulador + producto.precio, 0);
+            const totalPrecios = listOfProducts.reduce((acumulador, producto) => acumulador + producto.total, 0);
             const totalSubtotal = listOfProducts.reduce((acumulador, producto) => acumulador + producto.subtotal, 0);
             const totalItbis = listOfProducts.reduce((acumulador, producto) => acumulador + producto.itbis, 0);
 
-            setFTotal(totalPrecios)
-            setTitbis(totalItbis)
-            setTsubtotal(totalSubtotal)
+            setFTotal(formatearCantidadDeDinero(totalPrecios))
+            setTitbis(formatearCantidadDeDinero(totalItbis))
+            setTsubtotal(formatearCantidadDeDinero(totalSubtotal))
 
             /*  listOfProducts.map(({ itbis, subtotal, total }) => {
  
@@ -179,7 +179,7 @@ export default function pages() {
                 <div className='flex gap-2 '>
 
                     <button
-                        onClick={() => { console.log(user) }}
+                        onClick={() => { console.log(Titbis) }}
                         className=' w-8 bg-white rounded-sm transform transition-transform hover:rotate-6'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5" />
@@ -266,15 +266,15 @@ export default function pages() {
                                 <label>
                                     Subtotal:
                                 </label>
-                                <label> {formatearCantidadDeDinero(Tsubtotal)}</label>
+                                <label> {Tsubtotal}</label>
                             </span>
                             <span className='flex justify-between'>
                                 <label>Itbis:</label>
-                                <label> {formatearCantidadDeDinero(Titbis)}</label>
+                                <label> {Titbis}</label>
                             </span>
                             <span className='flex justify-between'>
                                 <label>Total:</label>
-                                <label> {formatearCantidadDeDinero(fTotal)}</label>
+                                <label> {fTotal}</label>
                             </span>
                         </div>
                     </div>
