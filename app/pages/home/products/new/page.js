@@ -9,7 +9,7 @@ export default function page() {
 
     const [product, setProduct] = useState();
     const [uid, setUid] = useState();
-    const { user } = useAppContext()
+    const { user,toast } = useAppContext()
 
     useEffect(() => {
         setUid(user.uid);
@@ -27,10 +27,25 @@ export default function page() {
         }
     }
 
+    const { setTextToast, setShowToast } = toast
+
+    const toastCall = (text) => {
+        setTextToast(text);
+        setShowToast(true);
+
+        setTimeout(() => {
+            setShowToast(false);
+            setTextToast("");
+        }, 3000);
+    };
+
     const handleSubmit = async (event) => {
         event.preventDefault();
         await newProducts(product, uid)
-        window.location.href = '/pages/home/products';
+        .then(()=>{
+            toastCall("Producto creado")
+            window.location.href = '/pages/home/products';
+        })
     }
 
     return (

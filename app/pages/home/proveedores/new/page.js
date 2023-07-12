@@ -21,7 +21,7 @@ const column = [
 export default function pages() {
 
     //Estado del sistema donde se guarda el user
-    const { user } = useAppContext()
+    const { user, toast } = useAppContext()
 
     //Estado del componente
     const [name, setName] = useState("")
@@ -35,6 +35,18 @@ export default function pages() {
         setRnc("")
     }
 
+    const { setTextToast, setShowToast } = toast
+
+    const toastCall = (text) => {
+        setTextToast(text);
+        setShowToast(true);
+
+        setTimeout(() => {
+            setShowToast(false);
+            setTextToast("");
+        }, 3000);
+    };
+
     const handleSubmit = async (e) => {
         e.preventDefault()
         await newProveedor({
@@ -43,16 +55,18 @@ export default function pages() {
             desc,
             tipoID: tipoID ? 1 : 2,
             uid: user.uid
+        }).then(()=>{
+            toastCall("Proveedor creado")
+            hanldeReset()
+           // window.location.href = "/pages/home/proveedores"
         })
-        hanldeReset()
-        window.location.href = "/pages/home/proveedores"
     }
 
     return (
-        <section class="bg-white dark:bg-gray-900">
+        <section class="bg-white  mt-14 dark:bg-gray-900">
             <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
 
-                <form action="#" class="space-y-8">
+                <form onSubmit={handleSubmit} class="space-y-8">
                     <div>
                         <label for="Nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombre y Apellido *</label>
                         <input
@@ -92,7 +106,7 @@ export default function pages() {
                             value={desc}
                             class="block p-2.5 w-full text-sm text-gray-900 bg-gray-50 rounded-lg shadow-sm border border-gray-300 focus:ring-primary-500 focus:border-primary-500 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500" placeholder="Descripcion..."></textarea>
                     </div>
-                    <Btn text={"Agregar"} fnc={handleSubmit} />
+                    <Btn text={"Agregar"}  />
                 </form>
             </div>
         </section>

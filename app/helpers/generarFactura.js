@@ -1,7 +1,6 @@
 //by importing 
 import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
 
-
 const generarFactura = async ({ rnc = "", name = "", tel = "", listOfProducts = "", fTotal = "", Tsubtotal = "", Titbis = "", nota }) => {
   var props = {
     outputType: OutputType.Save,

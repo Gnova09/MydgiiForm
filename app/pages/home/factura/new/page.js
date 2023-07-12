@@ -16,7 +16,6 @@ const day = today.getDay()
 const dateCreated = `${day}/${month}/${year}`;
 
 
-
 export default function pages() {
     //STATE APP//
     const [proveedor, setProveedor] = useState();
@@ -91,9 +90,8 @@ export default function pages() {
                         className='flex items-center w-8 h-8  justify-center'
                         type='button'
                         color="primary" onClick={() => eliminarObjeto(params.id)}>
-                        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                            <line x1="18" y1="6" x2="6" y2="18" />
-                            <line x1="6" y1="6" x2="18" y2="18" />
+                        <svg xmlns="http://www.w3.org/2000/svg" x="0px" y="0px" width="30" height="30" viewBox="0 0 30 30">
+                            <path d="M 14.984375 2.4863281 A 1.0001 1.0001 0 0 0 14 3.5 L 14 4 L 8.5 4 A 1.0001 1.0001 0 0 0 7.4863281 5 L 6 5 A 1.0001 1.0001 0 1 0 6 7 L 24 7 A 1.0001 1.0001 0 1 0 24 5 L 22.513672 5 A 1.0001 1.0001 0 0 0 21.5 4 L 16 4 L 16 3.5 A 1.0001 1.0001 0 0 0 14.984375 2.4863281 z M 6 9 L 7.7929688 24.234375 C 7.9109687 25.241375 8.7633438 26 9.7773438 26 L 20.222656 26 C 21.236656 26 22.088031 25.241375 22.207031 24.234375 L 24 9 L 6 9 z"></path>
                         </svg>
                     </button>
                 </div>
@@ -308,14 +306,14 @@ export default function pages() {
                         </button>
                         */}
 
-                        <BtnDefault action={() => setShowNewProduct(true)} tittle="Agregar Producto" 
-                        icon={
-                        <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
-                            <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
-                            <path d="M12 8v8M8 12h8" />
-                        </svg>} />
+                        <BtnDefault action={() => setShowNewProduct(true)} tittle="Agregar Producto"
+                            icon={
+                                <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                    <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
+                                    <path d="M12 8v8M8 12h8" />
+                                </svg>} />
 
-                       
+
                         <button
                             type='submit'
                             class="flex flex-row  text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
