@@ -35,15 +35,15 @@ export default function Page() {
             <h1 class="sm:text-3xl text-2xl font-medium title-font mb-4 text-gray-900">Master Cleanse Reliac Heirloom</h1>
             <p class="lg:w-2/3 mx-auto leading-relaxed text-base">
               Whatever cardigan tote bag tumblr hexagon brooklyn asymmetrical gentrify,
-              subway tile poke farm-to-table. Franzen you probably haven't heard of them
+              subway tile poke farm-to-table. Franzen you probably haven&apos;t heard of them
               man bun deep jianbing selfies heirloom prism food truck ugh squid celiac humblebrag.
             </p>
           </div>
           <div class="flex flex-wrap -m-4 text-center">
 
-            {rutas.map(({ tittle, link, icon }) => {
+            {rutas.map(({ tittle, link, icon },i) => {
 
-              return <div class="p-4  md:w-1/4 sm:w-1/2 w-full  transform hover:scale-105 transition duration-300 hover:cursor-pointer ">
+              return <div key={i} class="p-4  md:w-1/4 sm:w-1/2 w-full  transform hover:scale-105 transition duration-300 hover:cursor-pointer ">
                 <div class="border-2 bg-slate-50  border-gray-200 px-4 py-6 rounded-lg">
                   <Link href={link}>
                     {icon}
