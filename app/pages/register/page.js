@@ -1,5 +1,5 @@
 "use client"
-import { CreateUser } from "@/app/db/controllers/userdata"
+import { CreateUser } from "../../../app/db/controllers/userdata"
 import React, { useState } from "react"
 
 
