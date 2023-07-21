@@ -3,7 +3,7 @@ import React from 'react'
 import Ptable from './components/ptable'
 import Link from 'next/link'
 
-export default async function pages() {
+export default async function Pages() {
 
     return (
         <section class="flex mt-14 bg-white min-h-screen flex-col items-center justify-center">

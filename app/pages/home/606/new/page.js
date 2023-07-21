@@ -24,7 +24,7 @@ const year = today.getFullYear().toString();
 const month = (today.getMonth() + 1).toString().padStart(2, '0');
 const dateCreated = `${year}${month}`;
 
-export default function pages() {
+export default function Pages() {
     //STATE APP//
     const { user } = useAppContext()
 

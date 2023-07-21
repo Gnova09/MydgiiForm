@@ -16,7 +16,7 @@ const day = today.getDay()
 const dateCreated = `${day}/${month}/${year}`;
 
 
-export default function pages() {
+export default function Pages() {
     //STATE APP//
     const [proveedor, setProveedor] = useState();
 

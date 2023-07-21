@@ -8,7 +8,7 @@ import { deleteProducts, getProducts } from '@/app/db/controllers/products'
 
 
 
-export default function pages() {
+export default function Pages() {
 
   const { user, toast } = useAppContext()
   const [row, setRow] = useState("");

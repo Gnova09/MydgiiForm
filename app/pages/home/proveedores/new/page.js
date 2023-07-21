@@ -18,7 +18,7 @@ const column = [
 
 ]
 
-export default function pages() {
+export default function Pages() {
 
     //Estado del sistema donde se guarda el user
     const { user, toast } = useAppContext()
