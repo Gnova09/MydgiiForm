@@ -1,5 +1,5 @@
 "use client"
-import { CreateUser } from "../../../app/db/controllers/userdata"
+//import { CreateUser } from "../../../app/db/controllers/userdata"
 import React, { useState } from "react"
 
 
@@ -11,7 +11,7 @@ export default function Register() {
 
     const handleSubmit = async (e) => {
         e.preventDefault()
-        await CreateUser({email,name, password, rnc})
+       /// await CreateUser({email,name, password, rnc})
         /* console.log({
             rnc,
         email,
