@@ -3,6 +3,7 @@ import React from 'react'
 import useAppContext from '@/app/context/context'
 import { SignOutUser, authState, getUserByUid } from '@/app/db/controllers/userdata'
 import { useEffect } from 'react'
+import Image from 'next/image'
 
 const Navbar = () => {
    
@@ -19,6 +20,7 @@ const Navbar = () => {
             }
         }
         authState(userFnc)
+        // eslint-disable-next-line
     }, [islogin])
 
     const handleSideBar = () => {
@@ -66,7 +68,7 @@ const Navbar = () => {
                             </svg>
                         </button>
                         <a href="/pages/home" class="flex ml-2 md:mr-24">
-                            <img src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
+                            <Image width={32} height={32} src="https://flowbite.com/docs/images/logo.svg" class="h-8 mr-3" alt="FlowBite Logo" />
                             <span class="self-center text-xl font-semibold sm:text-2xl whitespace-nowrap dark:text-white">MyDGIIForm</span>
                         </a>
                     </div>
@@ -79,7 +81,7 @@ const Navbar = () => {
                                     onClick={handleAvatarMenu}
                                     class="flex text-sm bg-gray-800 rounded-full focus:ring-4 focus:ring-gray-300 dark:focus:ring-gray-600" aria-expanded="false" data-dropdown-toggle="dropdown-user">
                                     <span class="sr-only">Open user menu</span>
-                                    <img class="w-8 h-8 rounded-full" src="/assets/usePhoto.jpg" alt="user Photo" />
+                                    <Image width={32} height={32} class="w-8 h-8 rounded-full" src="/assets/usePhoto.jpg" alt="user Photo" />
                                 </button>
 
                                 <div class={`z-50 ${IsOpenAvatarmenu ? "block absolute right-[10px] " : "hidden"} my-4 text-base list-none bg-white divide-y divide-gray-100 rounded shadow dark:bg-gray-700 dark:divide-gray-600" id="dropdown-user`}  >

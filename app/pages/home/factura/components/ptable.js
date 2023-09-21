@@ -50,6 +50,7 @@ export default function Ptable() {
     useEffect(() => {
 
         fetchData();
+        // eslint-disable-next-line
     }, [user])
 
     return (

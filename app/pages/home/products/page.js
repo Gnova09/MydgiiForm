@@ -70,6 +70,7 @@ export default function Pages() {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line
   }, [user, update])
 
   return (

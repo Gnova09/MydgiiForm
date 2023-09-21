@@ -57,7 +57,7 @@ export const AppContextProvider = ({ children }) => {
     }, [islogin])
 
     //
-    const values = useMemo(() => (
+    const values = (
         {
             // Funciones que son exportadas para manejo externo.
 
@@ -74,7 +74,7 @@ export const AppContextProvider = ({ children }) => {
                 textToast, setTextToast
             }
 
-        }));   // States que serán visibles en el contexto.
+        });   // States que serán visibles en el contexto.
 
     // Interface donde será expuesto como proveedor y envolverá la App.
     return <AppContext.Provider value={values}>{children}</AppContext.Provider>;

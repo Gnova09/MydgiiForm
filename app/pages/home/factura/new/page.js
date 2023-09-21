@@ -138,6 +138,7 @@ export default function Pages() {
     useEffect(() => {
         setProveedor(user.proveedores);
         fetchData();
+        // eslint-disable-next-line 
     }, [user])
 
     useEffect(() => {
@@ -151,6 +152,7 @@ export default function Pages() {
             Titbis,
             Tsubtotal
         })
+        // eslint-disable-next-line
     }, [cliente, listOfProducts, dateCreated])
 
     const handleClienteChange = (event) => {

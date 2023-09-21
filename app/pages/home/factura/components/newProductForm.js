@@ -27,6 +27,7 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
 
     useEffect(() => {
         calcTotal()
+        // eslint-disable-next-line
     }, [selectedProduct, cant])
 
 

@@ -78,6 +78,7 @@ export default function Home() {
             getRowsProvider()
 
         }
+        // eslint-disable-next-line
     }, [user, update])
 
 
