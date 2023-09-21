@@ -3,7 +3,7 @@ import React from 'react'
 import Ptable from './components/ptable'
 import Link from 'next/link'
 
-export default async function Pages() {
+export default  function Pages() {
 
    
 
