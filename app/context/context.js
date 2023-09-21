@@ -31,14 +31,14 @@ export const AppContextProvider = ({ children }) => {
 
     const verifyLogin = () => {
 
-        if (typeof window !== 'undefined') {
+        /* if (typeof window !== 'undefined') {
             // Tu código que depende de window aquí
             if (islogin) {
                 window.location.href = "/pages/home"
             } else {
                 window.location.href = "/"
             }
-        }
+        } */
 
     }
 
