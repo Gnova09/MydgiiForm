@@ -1,4 +1,4 @@
-
+"use client"
 import React from 'react'
 import Ptable from './components/ptable'
 import Link from 'next/link'
