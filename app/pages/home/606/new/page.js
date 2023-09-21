@@ -128,9 +128,9 @@ export default function Pages() {
                                 <option value="">Seleccionar Proveedor</option>
                                 {
                                     proveedor? 
-                                    proveedor.map(({ rnc, name }) => {
+                                    proveedor.map(({ rnc, name },i) => {
 
-                                        return <option value={rnc}>{`${name} - ${rnc}`}</option>
+                                        return <option key={i} value={rnc}>{`${name} - ${rnc}`}</option>
                                     }):
                                     <option value="">Cargando proveedores...</option>
                                 }

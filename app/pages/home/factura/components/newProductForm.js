@@ -81,9 +81,9 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
                         class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-primary-500 focus:border-primary-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-primary-500 dark:focus:border-primary-500">
                         <option value="">Seleccionar productos</option>
                         {
-                            productos ? productos.map(({ name, description, precio }) => {
+                            productos ? productos.map(({ name, description, precio }, i) => {
 
-                                return <option value={JSON.stringify({ name, description, precio })}>{`${name} - RD$${precio}`}</option>
+                                return <option key={i} value={JSON.stringify({ name, description, precio })}>{`${name} - RD$${precio}`}</option>
                             })
                                 : <option value="">Cargando productos...</option>
                         }
