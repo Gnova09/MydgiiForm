@@ -5,7 +5,7 @@ import Link from 'next/link'
 
 export default async function Pages() {
 
-    if (typeof window === undefined) {
+    if (typeof window === "undefined") {
         return;
     }
 
