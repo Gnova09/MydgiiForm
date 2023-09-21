@@ -5,6 +5,10 @@ import Link from 'next/link'
 
 export default async function Pages() {
 
+    if (typeof window === undefined) {
+        return;
+    }
+
     return (
         <section class="flex mt-14 bg-white min-h-screen flex-col items-center justify-center">
             <h1 className=' font-extrabold text-3xl m-5'>Facturas</h1>
