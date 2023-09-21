@@ -31,14 +31,12 @@ export const AppContextProvider = ({ children }) => {
 
     const verifyLogin = () => {
 
-        /* if (typeof window !== 'undefined') {
-            // Tu código que depende de window aquí
-            if (islogin) {
-                window.location.href = "/pages/home"
-            } else {
-                window.location.href = "/"
-            }
-        } */
+            
+        if (islogin) {
+            window.location.href = "/pages/home"
+        } else {
+            window.location.href = "/"
+        }
 
     }
 
@@ -46,8 +44,8 @@ export const AppContextProvider = ({ children }) => {
     useEffect(() => {
         const userFnc = async (user) => {
             if (user) {
-                const usersign = await getUserByUid(user.uid)
-                setuser({ ...user, ...usersign });
+               const usersign = await getUserByUid(user.uid)
+                setuser({...user, ...usersign});
                 setproveedor(usersign.proveedor)
                 setIslogin(true)
 
@@ -71,7 +69,7 @@ export const AppContextProvider = ({ children }) => {
             islogin, setIslogin,
             user, setuser,
             verifyLogin,
-            toast: {
+            toast:{
                 showToast, setShowToast,
                 textToast, setTextToast
             }
