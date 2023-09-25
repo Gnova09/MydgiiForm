@@ -1,12 +1,12 @@
 "use client"
 import React, { useState } from 'react'
-import Ptable from '../../../components/ptable'
+/* import Ptable from '../../../components/ptable'
 import Link from 'next/link'
 import useAppContext from '@/app/context/context'
 import { getFacturas } from '@/app/db/controllers/facturas';
-import generarFactura from '@/app/helpers/generarFactura';
+import generarFactura from '@/app/helpers/generarFactura'; */
 
-const handleRowButton = async (row) => {
+/* const handleRowButton = async (row) => {
 
     generarFactura(row)
 
@@ -35,17 +35,17 @@ const column = [
         ),
     },
 
-]
+] */
 
 export default async function Pages() {
-    const { user } = useAppContext()
+   /*  const { user } = useAppContext()
     const [row, setRow] = useState([])
 
 
     const fetchData = async () => {
         const rowData = await getFacturas(user.uid);
         setRow(rowData);
-    };
+    }; */
 
     return (
         <section class="flex mt-14 bg-white min-h-screen flex-col items-center justify-center">
