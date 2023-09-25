@@ -1,8 +1,8 @@
 
 import React from 'react'
-import Navbar from './components/navbar/navbar';
-import Sidebar from './components/sidebar/sidebar';
-import { ToastSuccess } from './components/toast/toast';
+import Navbar from '../../components/navbar/navbar';
+import Sidebar from '../../components/sidebar/sidebar';
+import { ToastSuccess } from '../../components/toast/toast';
 
 const Navigation = ({children}) => {
 

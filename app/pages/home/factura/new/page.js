@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import DataTable from '../../../../components/table'
 import useAppContext from '@/app/context/context'
-import NewProductForm from '../components/newProductForm'
+import NewProductForm from '../../../../components/newProductForm'
 import { getProducts } from '@/app/db/controllers/products'
 import { newFactura } from '@/app/db/controllers/facturas'
 import { formatearCantidadDeDinero } from '@/app/helpers/formatDinero'

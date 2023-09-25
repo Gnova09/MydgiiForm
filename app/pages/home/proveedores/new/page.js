@@ -1,7 +1,7 @@
 "use client"
 import React, { useState, useEffect } from 'react'
 import useAppContext from '@/app/context/context'
-import Btn from '../../components/btn'
+import Btn from '../../../../components/btnNormal'
 import { newProveedor } from '@/app/db/controllers/proveedor'
 
 const column = [

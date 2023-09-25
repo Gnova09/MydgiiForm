@@ -1,36 +1,15 @@
 "use client"
 import React, { useEffect, useState } from 'react'
-import DataTable from '../../../../components/table'
+import DataTable from '../components/table'
 import useAppContext from '@/app/context/context';
-import { getForm606 } from '@/app/db/controllers/userdata';
 
-const handleRowButton = async (row) => {
 
-    let contenido = `606|${row.user}|${row.dateCreated}|${row.totalRow}`;// Contenido del documento a descargar
-
-    row.row.forEach(item => {
-        contenido += `\n${item.RNC}|${item.ID}|${item.bienes}|${item.NCF}||${item.Date.replace(/-/g, "")}||${item.Monto}||${item.Monto}|${item.Itbis}||||${item.Itbis + item.Itbis2 + item.Itbis10}|||||||${item.propina}|${item.Fpago}`
-    })
-
-    const nombreArchivo = "documento.txt"; // Nombre del archivo a descargar
-
-    const blob = new Blob([contenido], { type: "text/plain" });
-    const url = URL.createObjectURL(blob);
-
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = nombreArchivo;
-    link.click();
-
-    URL.revokeObjectURL(url);
-
-}
-
-const column = [
+/* const column = [
 
     { field: 'id', headerName: '#', width: 170 },
     { field: 'dateCreated', headerName: 'Fecha creacion', width: 130 },
-    { field: 'totalRow', headerName: 'Cantidad de registros', type: 'number', width: 170 },
+    { field: 'name', headerName: 'Cliente', width: 170 },
+    { field: 'nota', headerName: 'Nota', width: 170 },
     {
         field: 'actions',
         headerName: 'Descargar',
@@ -49,21 +28,20 @@ const column = [
         ),
     },
 
-]
+] */
 
-export default function Ptable() {
+export default function Ptable({column, callback, row}) {
 
     const { user } = useAppContext()
-    const [row, setRow] = useState([])
 
-    const fetchData = async () => {
-        const rowData = await getForm606(user.uid);
+  /*   const fetchData = async () => {
+        const rowData = await getFacturas(user.uid);
         setRow(rowData);
-    };
+    }; */
 
     useEffect(() => {
 
-        fetchData();
+        callback();
         // eslint-disable-next-line
     }, [user])
 
