@@ -1,9 +1,9 @@
 "use client"
 import React, { useState } from 'react'
  import Ptable from '../../../components/ptable'
-/*import Link from 'next/link'
+import Link from 'next/link'
 import useAppContext from '@/app/context/context'
-import { getFacturas } from '@/app/db/controllers/facturas';
+/*import { getFacturas } from '@/app/db/controllers/facturas';
 import generarFactura from '@/app/helpers/generarFactura'; */
 
 /* const handleRowButton = async (row) => {
