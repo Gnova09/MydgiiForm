@@ -108,7 +108,7 @@ export default function Pages() {
        
       await newForm606(form606, user.uid);
 
-       // window.location.href = '/pages/home/606';
+       window.location.href = '/pages/home/606';
     }
 
     return (
