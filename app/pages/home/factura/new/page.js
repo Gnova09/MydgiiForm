@@ -166,7 +166,7 @@ export default function Pages() {
         if (listOfProducts.length === 0) { toastCall("Debe agregar productos") }
         else {
             await newFactura({ factura, uid: user.uid })
-            window.location.href = "/pages/home/factura"
+           // window.location.href = "/pages/home/factura"
         };
 
 

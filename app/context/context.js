@@ -33,9 +33,9 @@ export const AppContextProvider = ({ children }) => {
 
             
         if (islogin) {
-            window.location.href = "/pages/home"
+           // window.location.href = "/pages/home"
         } else {
-            window.location.href = "/"
+          //  window.location.href = "/"
         }
 
     }

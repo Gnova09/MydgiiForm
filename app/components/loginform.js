@@ -10,7 +10,7 @@ export const Loginform = () => {
     const { islogin, setIslogin,setuser } = useAppContext()
 
     useEffect(()=>{
-        islogin === true ? window.location.href = "/pages/home" : null
+        islogin === true ? console.log("some page") : null // poner esto en el clg window.location.href = "/pages/home"
     })
  
 
