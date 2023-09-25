@@ -107,9 +107,8 @@ export default function Pages() {
     const handleFinish = async (e) => {
        
       await newForm606(form606, user.uid);
-        if(window !== "undefined"){
-            window.location.href = '/pages/home/606';
-        }
+
+       // window.location.href = '/pages/home/606';
     }
 
     return (
