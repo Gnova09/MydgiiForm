@@ -48,7 +48,7 @@ export default async function Pages() {
     };
 
     return (
-        <section class="flex mt-14 bg-white min-h-screen flex-col items-center justify-center">
+        <section class="flex mt-14 bg-white dark:bg-transparent min-h-screen flex-col items-center justify-center">
             <h1 className=' font-extrabold text-3xl m-5'>Facturas</h1>
 
             <Ptable callback={() => fetchData()} column={column} row={row} />

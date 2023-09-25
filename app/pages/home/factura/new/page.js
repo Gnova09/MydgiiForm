@@ -173,14 +173,14 @@ export default function Pages() {
     }
 
     return (
-        <div className="flex flex-col p-4 mt-14">
-            <div className='flex flex-row justify-between mb-2'>
+        <div className="flex flex-col p-4 mt-14 dark:bg-transparent">
+            <div className='flex flex-row justify-between mb-2 dark: bg-transparent'>
                 <h1 className=' font-bold text-2xl '>Nueva Factura</h1>
                 <div className='flex gap-2 '>
 
                     <button
                         onClick={() => { console.log(Titbis) }}
-                        className=' w-8 bg-white rounded-sm transform transition-transform hover:rotate-6'>
+                        className=' w-8 bg-white dark:bg-transparent rounded-sm transform transition-transform hover:rotate-6'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <path d="M21 13v5a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-5" />
                             <polyline points="7 10 12 15 17 10" />
@@ -192,7 +192,7 @@ export default function Pages() {
                     {/* Preview */}
                     <button
                         onClick={() => { console.log(productData) }}
-                        className=' w-8 bg-white rounded-sm transform transition-transform hover:rotate-6'>
+                        className=' w-8 bg-white dark:bg-transparent rounded-sm transform transition-transform hover:rotate-6'>
                         <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
                             <rect x="3" y="3" width="18" height="18" rx="2" ry="2" />
                             <circle cx="12" cy="12" r="3" />
@@ -202,7 +202,7 @@ export default function Pages() {
                 </div>
             </div>
 
-            <div className='flow flex-col bg-white items-center min-h-screen justify-center p-5'>
+            <div className='flow flex-col bg-white dark:bg-transparent items-center min-h-screen justify-center p-5'>
 
                 <NewProductForm showNewProduct={showNewProduct} cerrar={() => { setShowNewProduct(false) }} productos={productData} agregarProducto={setListOfProducts} />
 
@@ -318,14 +318,14 @@ export default function Pages() {
 
                         <button
                             type='submit'
-                            class="flex flex-row  text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
+                            class="flex flex-row dark:text-white text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
                         >
                             <svg xmlns="http://www.w3.org/2000/svg" width="20" viewBox="0 0 50 50" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
 
                                 <path d="M 42.875 8.625 C 42.84375 8.632813 42.8125 8.644531 42.78125 8.65625 C 42.519531 8.722656 42.292969 8.890625 42.15625 9.125 L 21.71875 40.8125 L 7.65625 28.125 C 7.410156 27.8125 7 27.675781 6.613281 27.777344 C 6.226563 27.878906 5.941406 28.203125 5.882813 28.597656 C 5.824219 28.992188 6.003906 29.382813 6.34375 29.59375 L 21.25 43.09375 C 21.46875 43.285156 21.761719 43.371094 22.050781 43.328125 C 22.339844 43.285156 22.59375 43.121094 22.75 42.875 L 43.84375 10.1875 C 44.074219 9.859375 44.085938 9.425781 43.875 9.085938 C 43.664063 8.746094 43.269531 8.566406 42.875 8.625 Z"></path>
                             </svg>
 
-                            <span className='ml-2'>
+                            <span className='ml-2 '>
                                 Finalizar
                             </span>
                         </button>

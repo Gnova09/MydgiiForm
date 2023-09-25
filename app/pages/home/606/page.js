@@ -66,7 +66,7 @@ export default async function Pages() {
     };
 
     return (
-        <section class="flex mt-14 bg-white min-h-screen flex-col items-center justify-center">
+        <section class="flex mt-14 min-h-screen flex-col items-center justify-center">
             <h1 className=' font-extrabold text-3xl m-5'>FORMULARIOS 606</h1>
 
             <Ptable column={column} row={row} callback={() => fetchData()} />

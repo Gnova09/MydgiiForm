@@ -63,9 +63,9 @@ export default function Pages() {
     }
 
     return (
-        <section class="bg-white  mt-14 dark:bg-gray-900">
+        <section class="bg-white  mt-14 dark:bg-transparent">
             <div class="py-8 lg:py-16 px-4 mx-auto max-w-screen-md">
-
+            <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Agregar nuevo proveedor</h2>
                 <form onSubmit={handleSubmit} class="space-y-8">
                     <div>
                         <label for="Nombre" class="block mb-2 text-sm font-medium text-gray-900 dark:text-gray-300">Nombre y Apellido *</label>

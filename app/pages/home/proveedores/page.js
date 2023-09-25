@@ -83,7 +83,7 @@ export default function Home() {
 
 
     return (
-        <section class="flex bg-white min-h-screen flex-col items-center mt-14 justify-center">
+        <section class="flex bg-white dark:bg-transparent min-h-screen flex-col items-center mt-14 justify-center">
             <h1 className=' font-extrabold text-3xl m-10'>Provedores</h1>
             <div className='w-full px-5'>
                 <DataTable column={column} row={row} />

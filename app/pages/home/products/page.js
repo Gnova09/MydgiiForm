@@ -49,7 +49,7 @@ export default function Pages() {
     headerName: 'Delete',
     width: 100,
     renderCell: (params) => (
-        <div className='flex items-center justify-center w-fit'>
+        <div className='flex items-center justify-center  w-fit'>
             <button variant="contained"
                 className='flex items-center w-8 h-8  justify-center'
                 type='button'
@@ -75,7 +75,7 @@ export default function Pages() {
 
   return (
 
-    <section class="flex bg-white  flex-col items-center justify-center p-4 min-h-screen mt-14">
+    <section class="flex bg-white dark:bg-transparent  flex-col items-center justify-center p-4 min-h-screen mt-14">
       <h1 className=' font-extrabold text-3xl m-5'>Productos</h1>
 
       {

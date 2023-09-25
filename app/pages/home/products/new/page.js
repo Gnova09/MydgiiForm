@@ -49,7 +49,7 @@ export default function Page() {
     }
 
     return (
-        <section class="bg-white mt-14 dark:bg-gray-900">
+        <section class="bg-white dark:bg-transparent mt-14 ">
             <div class="py-8 px-4 mx-auto max-w-2xl lg:py-16">
                 <h2 class="mb-4 text-xl font-bold text-gray-900 dark:text-white">Agregar nuevo producto</h2>
                 <form onSubmit={handleSubmit} action="">

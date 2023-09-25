@@ -12,7 +12,7 @@ const Navigation = ({children}) => {
            <Navbar />
 
 
-            <div class="p-4 sm:ml-64">
+            <div class="p-4 sm:ml-64 dark:bg-gray-600">
             {children}
             <ToastSuccess />
             </div>
