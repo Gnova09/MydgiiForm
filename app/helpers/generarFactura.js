@@ -1,7 +1,8 @@
 //by importing 
+"use client"
 import jsPDFInvoiceTemplate, { OutputType, jsPDF } from "jspdf-invoice-template";
 
-const generarFactura = async ({ rnc = "", name = "", tel = "", listOfProducts = "", fTotal = "", Tsubtotal = "", Titbis = "", nota }) => {
+export const generarFactura = async ({ rnc = "", name = "", tel = "", listOfProducts = "", fTotal = "", Tsubtotal = "", Titbis = "", nota }) => {
   var props = {
     outputType: OutputType.Save,
     returnJsPDFDocObject: true,
@@ -123,4 +124,3 @@ const generarFactura = async ({ rnc = "", name = "", tel = "", listOfProducts = 
   jsPDFInvoiceTemplate(props);
 }
 
-module.exports = generarFactura
