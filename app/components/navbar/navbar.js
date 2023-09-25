@@ -16,7 +16,7 @@ const Navbar = () => {
                 //LOGIN
             } else {
                 //NO LOGIN
-               // window.location.href = "/"
+               window.location.href = "/"
             }
         }
         authState(userFnc)
@@ -45,7 +45,7 @@ const Navbar = () => {
             console.log(error)
             setIslogin(false)
         }
-       // window.location.href = "/" 
+        window.location.href = "/" 
 
         
     }   

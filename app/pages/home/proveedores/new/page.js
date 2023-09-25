@@ -58,7 +58,7 @@ export default function Pages() {
         }).then(()=>{
             toastCall("Proveedor creado")
             hanldeReset()
-           // window.location.href = "/pages/home/proveedores"
+           window.location.href = "/pages/home/proveedores"
         })
     }
 

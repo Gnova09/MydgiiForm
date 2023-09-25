@@ -44,7 +44,7 @@ export default function Page() {
         await newProducts(product, uid)
         .then(()=>{
             toastCall("Producto creado")
-           // window.location.href = '/pages/home/products';
+            window.location.href = '/pages/home/products';
         })
     }
 

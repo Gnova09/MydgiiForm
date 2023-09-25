@@ -7,12 +7,12 @@ export const Loginform = () => {
 
     const [email, setEmail] = useState("")
     const [pass, setPass] = useState("")
-    const { islogin, setIslogin,setuser } = useAppContext()
+    const { islogin, setIslogin, setuser } = useAppContext()
 
-    useEffect(()=>{
-        islogin === true ? console.log("some page") : null // poner esto en el clg window.location.href = "/pages/home"
+    useEffect(() => {
+        islogin === true ? window.location.href = "/pages/home" : null 
     })
- 
+
 
     const handleSubmitLogin = async (e) => {
         e.preventDefault()
@@ -22,15 +22,15 @@ export const Loginform = () => {
         pasa a home
         */
         const { user, error } = await SignIn(email, pass)
-       // await newClient("kljs","georges")
+        // await newClient("kljs","georges")
         if (error) {
             console.log(error)
         }
         if (user) {
-            
+
             await setuser(user);
             //await setIslogin(true);
-            //window.location.href = "/pages/home"
+            window.location.href = "/pages/home"
         }
     }
 

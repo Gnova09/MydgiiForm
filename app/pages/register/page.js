@@ -20,7 +20,7 @@ export default function Register() {
         password
         })
  */
-        // window.location.href="/pages/home"
+         window.location.href="/pages/home"
     }
 
     return (
