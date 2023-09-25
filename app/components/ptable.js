@@ -39,12 +39,14 @@ export default function Ptable({column, callback, row}) {
         setRow(rowData);
     }; */
 
-    useEffect(() => {
-
-        callback();
+  /*   useEffect(() => {
+        if (user.uid) {
+            callback();
+            console.log(row)
+        }
         // eslint-disable-next-line
     }, [user])
-
+ */
     return (
         <div className='flex items-center justify-center w-full px-5'>
             {

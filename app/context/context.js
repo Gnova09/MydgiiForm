@@ -33,26 +33,26 @@ export const AppContextProvider = ({ children }) => {
 
             
         if (islogin) {
-           // window.location.href = "/pages/home"
+            window.location.href = "/pages/home"
         } else {
-          //  window.location.href = "/"
+            window.location.href = "/"
         }
 
     }
 
+    const userFnc = async (user) => {
+        if (user) {
+           const usersign = await getUserByUid(user.uid)
+            setuser({...user, ...usersign});
+            setproveedor(usersign.proveedor)
+            setIslogin(true)
+
+        } else {
+            setIslogin(false)
+        }
+    }
     //Sesion logeada
     useEffect(() => {
-        const userFnc = async (user) => {
-            if (user) {
-               const usersign = await getUserByUid(user.uid)
-                setuser({...user, ...usersign});
-                setproveedor(usersign.proveedor)
-                setIslogin(true)
-
-            } else {
-                setIslogin(false)
-            }
-        }
         authState(userFnc)
     }, [islogin])
 
