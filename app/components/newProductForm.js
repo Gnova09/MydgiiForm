@@ -56,7 +56,7 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
     }
 
     return (
-        <div className={` ${showNewProduct ? "fixed" : "hidden"} flex flex-col items-center justify-center   right-0  p-5  w-64 z-50 bg-white border-2 border-black rounded-md `}>
+        <div className={` ${showNewProduct ? "fixed" : "hidden"} flex flex-col items-center justify-center   right-0  p-5  w-64 z-50 bg-white dark:bg-gray-800 border-2 border-black rounded-md `}>
             <button onClick={() => {
                 ResetValues()
                 cerrar()
@@ -131,7 +131,7 @@ const NewProductForm = ({ showNewProduct, productos, agregarProducto, cerrar }) 
 
                 <button
                     type='submit'
-                    class="flex flex-row justify-center text-sm py-2 px-4 bg-transparent text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
+                    class="flex flex-row justify-center text-sm py-2 px-4 bg-transparent dark:text-white dark:border-white text-blue-600 font-semibold border border-blue-600 rounded hover:bg-blue-600 hover:text-white hover:border-transparent transition ease-in duration-200 transform hover:-translate-y-1 active:translate-y-0"
                 >
 
                     <span className='ml-2'>

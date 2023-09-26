@@ -7,10 +7,11 @@ export default  function DataTable({column, row}) {
  
 
   return (
-    <div style={{ height: 400, width: '100%' }}>
+    <div style={{ height: 400, width: '100%' }} >
       <DataGrid
         rows={row}
         columns={column}
+        className='dark: text-white'
         
         initialState={{
           pagination: {
