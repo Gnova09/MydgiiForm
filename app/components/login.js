@@ -3,17 +3,17 @@ import { Loginform } from './loginform'
 import Image from 'next/image'
 
 const Login = () => {
-
+    const {apiKey,databaseURL, authDomain,projectId, storageBucket, messagingSenderId,appId,measurementId} = process.env
     console.log(
         {
-            apiKey: process.env.apiKey,
-            databaseURL: process.env.databaseURL,
-            authDomain: process.env.authDomain,
-            projectId: process.env.projectId,
-            storageBucket: process.env.storageBucket,
-            messagingSenderId: process.env.messagingSenderId,
-            appId: process.env.appId,
-            measurementId: process.env.measurementId
+            apiKey,
+            databaseURL,
+            authDomain,
+            projectId,
+            storageBucket,
+            messagingSenderId,
+            appId,
+            measurementId
         }
     )
     return (
