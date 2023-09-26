@@ -5,14 +5,14 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: "AIzaSyC1lKtFXFXy83bdmINQ1WwKXH9KT-sdBbM",
-    databaseURL: "https://mydgiiapp-default-rtdb.firebaseio.com/",
-    authDomain: "mydgiiapp.firebaseapp.com",
-    projectId: "mydgiiapp",
-    storageBucket: "mydgiiapp.appspot.com",
-    messagingSenderId: "573530173108",
-    appId: "1:573530173108:web:d0a6ed7f93ffb752b8f1e1",
-    measurementId: "G-54228830VJ"
+    apiKey: process.env.apiKey,
+    databaseURL: process.env.databaseURL,
+    authDomain: process.env.authDomain,
+    projectId: process.env.projectId,
+    storageBucket: process.env.storageBucket,
+    messagingSenderId: process.env.measurementId,
+    appId: process.env.appId,
+    measurementId: process.env.measurementId
 };
 
 // Initialize Firebase
