@@ -1,11 +1,11 @@
 "use client"
+import React, { useEffect, useState } from "react"
 import DataTable from "@/app/components/table"
 import useAppContext from "@/app/context/context"
-import { getFacturas } from "@/app/db/controllers/facturas"
 import { DeleteProveedor, getProveedor } from "@/app/db/controllers/proveedor"
 import { generarFactura } from "@/app/helpers/generarFactura"
 import Link from "next/link"
-import React, { useEffect, useState } from "react"
+//import { getFacturas } from "@/app/db/controllers/facturas"
 
 export default function Home() {
 
@@ -26,7 +26,7 @@ export default function Home() {
 
     const handleRowButton = async (row) => {
 
-        generarFactura(row)
+     //   generarFactura(row)
         
     }
 
