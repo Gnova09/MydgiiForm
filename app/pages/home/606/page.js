@@ -27,7 +27,7 @@ export default function Home() {
 
     const handleRowButton = async (row) => {
 
-          let contenido = `606|${row.user}|${row.dateCreated}|${row.totalRow}`;// Contenido del documento a descargar
+       /*  let contenido = `606|${row.user}|${row.dateCreated}|${row.totalRow}`;// Contenido del documento a descargar
      
          row.row.forEach(item => {
              contenido += `\n${item.RNC}|${item.ID}|${item.bienes}|${item.NCF}||${item.Date.replace(/-/g, "")}||${item.Monto}||${item.Monto}|${item.Itbis}||||${item.Itbis + item.Itbis2 + item.Itbis10}|||||||${item.propina}|${item.Fpago}`
@@ -43,7 +43,7 @@ export default function Home() {
          link.download = nombreArchivo;
          link.click();
      
-         URL.revokeObjectURL(url);
+         URL.revokeObjectURL(url); */
       
     }
 
