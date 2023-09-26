@@ -5,7 +5,7 @@ import { getFirestore } from "firebase/firestore";
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-    apiKey: process.env.apiKey ,
+    apiKey: `${process.env.apiKey}`,
     databaseURL: `${process.env.databaseURL}`,
     authDomain: `${process.env.authDomain}`,
     projectId: `${process.env.projectId}`,
@@ -13,7 +13,6 @@ const firebaseConfig = {
     messagingSenderId: `${process.env.measurementId}`,
     appId: `${process.env.appId}`,
     measurementId: `${process.env.measurementId}`
-    
 };
 
 // Initialize Firebase
