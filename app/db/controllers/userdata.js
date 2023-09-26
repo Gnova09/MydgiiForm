@@ -1,5 +1,5 @@
 import { db, auth } from "../firebase";
-import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged } from "firebase/auth";
+import { createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut, onAuthStateChanged, browserSessionPersistence, setPersistence } from "firebase/auth";
 import { arrayUnion, doc, getDoc, setDoc, updateDoc } from "firebase/firestore";
 
 
@@ -61,10 +61,10 @@ export async function CreateUser({ email, password, name, rnc = "" }) {
             forms607: []
         })
         await setDoc(products, {
-            products:[]
+            products: []
         })
         await setDoc(facturas, {
-            facturas:[]
+            facturas: []
         })
 
         console.log('Nuevo usuario creado con ID:', user.uid);
@@ -80,7 +80,20 @@ export async function CreateUser({ email, password, name, rnc = "" }) {
 export async function SignIn(email, password) {
 
     try {
-        const userSign = await signInWithEmailAndPassword(auth, email, password)
+        const userSign = await setPersistence(auth, browserSessionPersistence)
+                .then(async() => {
+                    // Existing and future Auth states are now persisted in the current
+                    // session only. Closing the window would clear any existing state even
+                    // if a user forgets to sign out.
+                    // ...
+                    // New sign-in will be persisted with session persistence.
+                    return (await signInWithEmailAndPassword(auth, email, password))
+                })
+                .catch((error) => {
+                    // Handle Errors here.
+                    const errorCode = error.code;
+                    const errorMessage = error.message;
+                });
         // Signed in
         return userSign.user
 
@@ -154,8 +167,8 @@ export async function getForm606(uid) {
         if (documentSnapshot.exists()) {
             const data = []
             let n = 1
-            const formdata =documentSnapshot.data()
-            
+            const formdata = documentSnapshot.data()
+
             formdata.forms606.forEach((doc) => {
                 // doc.data() is never undefined for query doc snapshots
                 data.push({ ...doc, id: n++ })
