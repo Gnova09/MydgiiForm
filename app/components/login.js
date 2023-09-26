@@ -3,19 +3,7 @@ import { Loginform } from './loginform'
 import Image from 'next/image'
 
 const Login = () => {
-    const {apiKey,databaseURL, authDomain,projectId, storageBucket, messagingSenderId,appId,measurementId} = process.env
-    console.log(
-        {
-            apiKey,
-            databaseURL,
-            authDomain,
-            projectId,
-            storageBucket,
-            messagingSenderId,
-            appId,
-            measurementId
-        }
-    )
+  
     return (
         <section class="bg-gray-50 dark:bg-gray-900 w-1/2 ">
             <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
