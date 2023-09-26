@@ -4,7 +4,18 @@ import Image from 'next/image'
 
 const Login = () => {
 
-
+    console.log(
+        {
+            apiKey: `${process.env.apiKey}`,
+            databaseURL: `${process.env.databaseURL}`,
+            authDomain: `${process.env.authDomain}`,
+            projectId: `${process.env.projectId}`,
+            storageBucket: `${process.env.storageBucket}`,
+            messagingSenderId: `${process.env.messagingSenderId}`,
+            appId: `${process.env.appId}`,
+            measurementId: `${process.env.measurementId}`
+        }
+    )
     return (
         <section class="bg-gray-50 dark:bg-gray-900 w-1/2 ">
             <div class="flex flex-col items-center justify-center px-6 py-8 mx-auto md:h-screen lg:py-0">
