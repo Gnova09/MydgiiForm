@@ -19,6 +19,7 @@ const Login = () => {
                     </div>
                 </div>
             </div>
+            <span class="text-sm ml-1 text-gray-500 sm:text-center dark:text-gray-400">© 2023 <a href="https://github.com/Gnova09" class="hover:underline">DevNova™</a>. All Rights Reserved.   VERSION 1.0.4</span>
         </section>
     )
 }
