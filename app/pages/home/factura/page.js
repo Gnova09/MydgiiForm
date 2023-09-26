@@ -3,9 +3,9 @@ import React, { useEffect, useState } from "react"
 import DataTable from "@/app/components/table"
 import useAppContext from "@/app/context/context"
 import { DeleteProveedor, getProveedor } from "@/app/db/controllers/proveedor"
-import { generarFactura } from "@/app/helpers/generarFactura"
+//import { generarFactura } from "@/app/helpers/generarFactura"
 import Link from "next/link"
-//import { getFacturas } from "@/app/db/controllers/facturas"
+import { getFacturas } from "@/app/db/controllers/facturas"
 
 export default function Home() {
 
