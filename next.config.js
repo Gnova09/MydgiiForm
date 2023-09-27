@@ -1,5 +1,6 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
+    //ENVIROMENTS TO PRODUCTION
     env: {
         apiKey: `${process.env.apiKey}`,
         databaseURL: `${process.env.databaseURL}`,
