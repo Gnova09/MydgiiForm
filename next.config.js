@@ -2,7 +2,7 @@
 const nextConfig = {
     //ENVIROMENTS TO PRODUCTION
     env: {
-        apiKey: `${process.env.NEXT_PUBLIC_apiKey}`,
+        apiKey: `${process.env.apiKey}`,
         databaseURL: `${process.env.databaseURL}`,
         authDomain: `${process.env.authDomain}`,
         projectId: `${process.env.projectId}`,
