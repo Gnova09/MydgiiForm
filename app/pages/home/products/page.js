@@ -4,7 +4,7 @@ import React, { useState, useEffect } from 'react'
 import DataTable from '@/app/components/table'
 import Link from 'next/link'
 import useAppContext from '@/app/context/context'
-import { deleteProducts, getProducts } from '@/app/db/controllers/products'
+import { deleteProducts, getProducts } from '@/lib/db/controllers/products'
 
 
 

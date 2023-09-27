@@ -1,7 +1,7 @@
 "use client"
 import DataTable from "@/app/components/table"
 import useAppContext from "@/app/context/context"
-import { DeleteProveedor, getProveedor } from "@/app/db/controllers/proveedor"
+import { DeleteProveedor, getProveedor } from "@/lib/db/controllers/proveedor"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 

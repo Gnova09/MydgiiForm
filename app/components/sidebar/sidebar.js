@@ -1,4 +1,4 @@
-import { SignOutUser } from '@/app/db/controllers/userdata'
+import { SignOutUser } from '@/lib/db/controllers/userdata'
 import Link from 'next/link'
 import React from 'react'
 import Logout from './Logout'

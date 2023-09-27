@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import DataTable from '../../../../components/table'
 import useAppContext from '@/app/context/context'
-import { newForm606 } from '@/app/db/controllers/userdata'
+import { newForm606 } from '@/lib/db/controllers/userdata'
 
 
 const column = [

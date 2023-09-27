@@ -1,7 +1,7 @@
 "use client"
 
 import React, { createContext, useContext, useState, useEffect, useMemo } from 'react';
-import { authState, getForm606, getUserByUid } from '../db/controllers/userdata';
+import { authState, getForm606, getUserByUid } from '../../lib/db/controllers/userdata';
 
 
 //Context

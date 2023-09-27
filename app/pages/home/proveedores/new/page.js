@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react'
 import useAppContext from '@/app/context/context'
 import Btn from '../../../../components/btnNormal'
-import { newProveedor } from '@/app/db/controllers/proveedor'
+import { newProveedor } from '@/lib/db/controllers/proveedor'
 
 const column = [
     { field: 'id', headerName: 'N   CF', width: 130 },

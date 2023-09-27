@@ -1,7 +1,7 @@
 "use client"
 import React from 'react'
 import useAppContext from '@/app/context/context'
-import { SignOutUser, authState, getUserByUid } from '@/app/db/controllers/userdata'
+import { SignOutUser, authState, getUserByUid } from '@/lib/db/controllers/userdata'
 import { useEffect } from 'react'
 import Image from 'next/image'
 

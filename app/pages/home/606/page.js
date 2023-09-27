@@ -1,9 +1,9 @@
 "use client"
 import DataTable from "@/app/components/table"
 import useAppContext from "@/app/context/context"
-import { getFacturas } from "@/app/db/controllers/facturas"
-import { DeleteProveedor, getProveedor } from "@/app/db/controllers/proveedor"
-import { getForm606 } from "@/app/db/controllers/userdata"
+import { getFacturas } from "@/lib/db/controllers/facturas"
+import { DeleteProveedor, getProveedor } from "@/lib/db/controllers/proveedor"
+import { getForm606 } from "@/lib/db/controllers/userdata"
 import Link from "next/link"
 import React, { useEffect, useState } from "react"
 

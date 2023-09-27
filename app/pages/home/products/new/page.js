@@ -1,6 +1,6 @@
 "use client"
 import useAppContext from '@/app/context/context';
-import { newProducts } from '@/app/db/controllers/products';
+import { newProducts } from '@/lib/db/controllers/products';
 import React, { useEffect, useState } from 'react'
 
 

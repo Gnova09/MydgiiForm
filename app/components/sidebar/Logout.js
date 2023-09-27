@@ -1,5 +1,5 @@
 "use client"
-import { SignOutUser } from '@/app/db/controllers/userdata'
+import { SignOutUser } from '@/lib/db/controllers/userdata'
 import React from 'react'
 
 const Logout = () => {

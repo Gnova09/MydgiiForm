@@ -1,6 +1,6 @@
 "use client"
 import Image from "next/image"
-import { CreateUser } from "../../../app/db/controllers/userdata"
+import { CreateUser } from "@/lib/db/controllers/userdata"
 import React, { useState } from "react"
 
 
