@@ -3,9 +3,10 @@ import React, { useEffect, useState } from "react"
 import DataTable from "@/app/components/table"
 import useAppContext from "@/app/context/context"
 import { DeleteProveedor, getProveedor } from "@/lib/db/controllers/proveedor"
-//import { generarFactura } from "@/app/helpers/generarFactura"
+import { generarFactura } from "@/app/helpers/generarFactura"
 import Link from "next/link"
 import { getFacturas } from "@/lib/db/controllers/facturas"
+import { useRouter } from "next/router"
 
 export default function Home() {
 
@@ -26,8 +27,18 @@ export default function Home() {
 
     const handleRowButton = async (row) => {
 
-     //   generarFactura(row)
-        
+        let pdfBase64 = await generarFactura(row)
+        /* 
+        var file = new Blob([], { type: 'application/pdf' });
+        var fileURL = URL.createObjectURL(file);
+        window.open(fileURL, '_blank'); */
+
+        console.log(
+           `data:application/pdf;base64,${pdfBase64.factura}`
+
+        )
+
+
     }
 
     const column = [
@@ -57,7 +68,7 @@ export default function Home() {
     let n = 1
 
     const getRowsProvider = async () => {
-        const provider = await getFacturas( user.uid );
+        const provider = await getFacturas(user.uid);
         setRow(
             provider
         )
